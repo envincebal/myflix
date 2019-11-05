@@ -14,7 +14,7 @@ http.createServer((req, res) => {
     }
 
 
-    fs.appendFile("log.txt", `URL: ${address}\n Timestamp: ${new Date()}`, (error) => {
+    fs.appendFile("log.txt", `URL: ${address}\n Timestamp: ${new Date()}\n\n`, (error) => {
       if (error) {
         console.log(error);
       } else {
