@@ -6,14 +6,162 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <h1>MyFlix API</h1>
+  <h1>MyFlix API Documentation</h1>
 
   <p>This application will allow users to search for information about all things movie related. This includes info
     about actors, directors and genres. In addition, it will allow them to set up an account to create a list of their
     favorite movies.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Business Logic</th>
+        <th>URL</th>
+        <th>HTTP method</th>
+        <th>Request body data format</th>
+        <th>Response body data format</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Get list of all movies.</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          JSON object holding data about all movies. Example:
+          <p>
+            {
+            name: "Star Wars: The Empire Strikes Back",
+            description: "After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker
+            begins Jedi training with Yoda, while his friends are pursued by Darth Vader.",
+            genre: "sci-fi",
+            director: "Irvin Kershner",
+            img:
+            "https://m.media-amazon.com/images/M/MV5BYmU1NDRjNDgtMzhiMi00NjZmLTg5NGItZDNiZjU5NTU4OTE0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+            featured: "false"
+            }
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>Get data of single movie by title to user.</td>
+        <td>/movies/[title]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          JSON object holding data about a single movie.
+        </td>
+      </tr>
+      <tr>
+        <td>Get data about a genre.</td>
+        <td>/genre/[name]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          JSON object holding data about a movie genre, containing name and
+          description. Exampl:
+          <p>
+            {
+            Name: "Sci-fi",
+            Description: "A movie about space and aliens."
+            }
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>Get data about a director by name.</td>
+        <td>/director/[name]</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>
+          JSON object holding data about a director. Example:
+          <p>
+            {
+            Name: "George Lucas",
+            Bio: "Science fiction director",
+            Birth: 1944
+            }
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>Add a new user to registry.</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td>
+          JSON object holding data about the user being added. Example:
+          <p>
+            {
+            username: "Jim Smith",
+            password: "s3cr3tpassword",
+            email: "him.smith@msn.com",
+            DOB: "2/5/1955"
+            }
+          </p>
+        </td>
+        <td>
+          JSON object holding data about the user that was added. Example:
+          <p>
+            {
+            username: "Jim Smith",
+            password: "s3cr3tpassword",
+            email: "him.smith@msn.com",
+            DOB: "2/5/1955"
+            }
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>Update a user's information.</td>
+        <td>/users/[username]</td>
+        <td>PUT</td>
+        <td>
+          JSON object holding data about the user being added. Example:
+          <p>
+            {
+            username: "Jim Smith",
+            password: "s3cr3tpassword",
+            email: "him.smith@msn.com",
+            DOB: "2/5/1955"
+            }
+          </p>
+        </td>
+        <td>A message confirming a user's information was updated.</td>
+      </tr>
+      <tr>
+        <td>Add a movie to the user's favorites list</td>
+        <td>/favorites/[username]/movies/[movieID]</td>
+        <td>POST</td>
+        <td>None</td>
+        <td>
+          A message confirming a title was added to the user's
+          list of favorite movies.
+        </td>
+      </tr>
+      <tr>
+        <td>Delete a movie from the user's list of favorites.</td>
+        <td>/favorites/[username]/movies/[movieID]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>
+          A message confirming a title was deleted from the user's
+          list of favorite movies.
+        </td>
+      </tr>
+      <tr>
+        <td>Remove a user from the registry.</td>
+        <td>/users/[username]</td>
+        <td>DELETE</td>
+        <td>None</td>
+        <td>A message confirming the user was removed from the registry.</td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 
 </html>
