@@ -13,16 +13,13 @@ const {
 const Movies = Models.Movie;
 const Users = Models.User;
 
-var allowedOrigins = ['http://localhost:3000', 'http://testsite.com'];
+var allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) {
-      return callback(null, true);
-    }
-    if (allowedOrigins.indexOf(origin) === -1) {
-      var message = "The CORS policy for this application doesn't allow access from origin " + origin;
-
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) { // If a specific origin isn’t found on the list of allowed origins
+      var message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
       return callback(new Error(message), false);
     }
     return callback(null, true);
@@ -132,45 +129,51 @@ app.get("/users/:Username", passport.authenticate('jwt', {
 })
 
 // Allow new users to register
-app.post("/users",
-  [check("Username", "Username is required").isLength({
+app.post('/users',
+  [check('Username', 'Username is required').isLength({
       min: 5
     }),
-    check("Username", "Username contains non-alphanumeric characters - not allowed").isAlphanumeric(),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Email does not appear to be valid').isEmail()
   ], (req, res) => {
+
+    // check the validation object for errors
     var errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       return res.status(422).json({
         errors: errors.array()
-      })
+      });
     }
 
     var hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({
         Username: req.body.Username
-      })
-      .then(user => {
+      }) // Search to see if a user with the requested username already exists
+      .then(function (user) {
         if (user) {
-          return res.status(400).send(req.body.Username + " already exists.");
+          //If the user is found, send a response that it already exists
+          return res.status(400).send(req.body.Username + " already exists");
         } else {
-          Users.create({
+          Users
+            .create({
               Username: req.body.Username,
               Password: hashedPassword,
               Email: req.body.Email,
-              BirthDate: new Date(req.body.BirthDate)
+              Birthday: req.body.Birthday
             })
-            .then(user => res.status(201).json(user))
-            .catch(err => {
-              console.error(err);
-              res.status(500).send("Error: " + err + " ");
+            .then(function (user) {
+              res.status(201).json(user)
             })
+            .catch(function (error) {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
         }
-      }).catch(err => {
-        console.error(err);
-        res.status(500).send(" Error: " + err);
+      }).catch(function (error) {
+        console.error(error);
+        res.status(500).send("Error: " + error);
       });
   });
 
@@ -260,4 +263,4 @@ app.delete("/users/:Username", passport.authenticate('jwt', {
 var port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log("Listening on Port " + port);
-}); 
+});
