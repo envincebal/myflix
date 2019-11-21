@@ -4,7 +4,6 @@ const morgan = require("morgan");
 const bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 const Models = require("./models.js");
-
 const cors = require("cors");
 const {
   check,
@@ -54,7 +53,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.redirect("/movies");
+  res.redirect("Welcome to MyFlix!");
 });
 
 //Return a list of ALL movies to the user
@@ -261,4 +260,4 @@ app.delete("/users/:Username", passport.authenticate('jwt', {
 var port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log("Listening on Port " + port);
-});
+}); 
