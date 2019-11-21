@@ -258,6 +258,6 @@ app.delete("/users/:Username", passport.authenticate('jwt', {
 });
 
 var port = process.env.PORT || 3000;
-app.listen(port, "0.0.0.0", () => {
-  console.log("Listening on Port 3000");
+app.listen(port, () => {
+  console.log("Listening on Port " + port);
 });
