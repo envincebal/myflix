@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 const Models = require("./models.js");
+
 const cors = require("cors");
 const {
   check,
@@ -53,7 +54,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Welcome to MyFlix!");
+  res.redirect("/movies");
 });
 
 //Return a list of ALL movies to the user
@@ -148,7 +149,7 @@ app.post("/users",
       })
     }
 
-    var hashedPassword = Users.hashedPassword(req.body.Password);
+    var hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({
         Username: req.body.Username
       })
