@@ -17,7 +17,7 @@ const Users = Models.User;
 
 app.use(cors());
 
-mongoose.connect("mongodb+srv://envincebal:.357magnum@myFlixDB-luj5p.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://envincebal:.357magnum@myflixdb-luj5p.mongodb.net/test?retryWrites=true&w=majority", {
   useNewUrlParser: true
 });
 
