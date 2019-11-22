@@ -9,7 +9,9 @@ const {
   check,
   validationResult
 } = require('express-validator');
-
+var auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 const Movies = Models.Movie;
 const Users = Models.User;
 
@@ -27,9 +29,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-var auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
+
 
 app.use(express.static("public"));
 
