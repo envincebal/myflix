@@ -21,7 +21,7 @@ const Users = Models.User;
 app.use(cors());
 
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect("mongodb+srv://envincebal:.357magnum@myFlixDB-luj5p.mongodb.net/test?retryWrites=true&w=majority", {
   useNewUrlParser: true
 });
 
