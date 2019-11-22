@@ -25,12 +25,7 @@ mongoose.connect("mongodb+srv://envincebal:.357magnum@myflixdb-luj5p.mongodb.net
   useNewUrlParser: true
 });
 
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
 app.use(bodyParser.json());
-
 
 app.use(express.static("public"));
 
