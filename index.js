@@ -13,7 +13,7 @@ const {
 const Movies = Models.Movie;
 const Users = Models.User;
 
-var allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+var allowedOrigins = ['http://localhost:3000', 'http://testsite.com'];
 
 app.use(cors({
   origin: function (origin, callback) {
