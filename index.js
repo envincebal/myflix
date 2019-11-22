@@ -12,6 +12,7 @@ const {
 var auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
+
 const Movies = Models.Movie;
 const Users = Models.User;
 
@@ -19,7 +20,8 @@ const Users = Models.User;
 
 app.use(cors());
 
-mongoose.connect("mongodb+srv://myFlixDBadmin:.357magnum@myflixdb-luj5p.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://envincebal:.357magnum@myflixdb-luj5p.mongodb.net/test?retryWrites=true&w=majority", {
   useNewUrlParser: true
 });
 
@@ -28,7 +30,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
-
 
 
 app.use(express.static("public"));
