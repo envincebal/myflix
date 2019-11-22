@@ -41,7 +41,7 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.redirect("Welcome to MyFlix!");
+  res.send("Welcome to MyFlix!");
 });
 
 //Return a list of ALL movies to the user
