@@ -33,20 +33,19 @@ export class MainView extends Component {
   render() {
     const { movies, selectedMovie } = this.state;
 
-    // Before the movies have been loaded
-    if (!movies) return <div className="main-view"/>;
+    if (!movies) return <div className="main-view" />;
 
     return (
-      
-     <div className="main-view">
-       {console.log(movies[2].movie)}
-      {selectedMovie
-         ? <MovieView movie={selectedMovie}/>
-         : movies.map(movie => (
-           <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-         ))
-      }
-     </div>
+      <div className="main-view">
+        {selectedMovie ? (
+          <MovieView movie={selectedMovie} previous={movie => this.onMovieClick(!movie)}  />
+        ) : (
+            movies.map(movie => (
+              <MovieCard key={movie._id} movie={movie} click={movie => this.onMovieClick(movie)}  />
+            ))
+          )
+        }
+      </div>
     );
   }
 }

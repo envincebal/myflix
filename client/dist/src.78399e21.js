@@ -33491,13 +33491,13 @@ function (_Component) {
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          _onClick = _this$props.onClick;
+          click = _this$props.click;
       return _react.default.createElement("div", {
         onClick: function onClick() {
-          return _onClick(movie);
+          return click(movie);
         },
         className: "movie-card"
-      }, movie.titl);
+      }, movie.title);
     }
   }]);
 
@@ -33555,13 +33555,15 @@ function (_Component) {
   _createClass(MovieView, [{
     key: "render",
     value: function render() {
-      var movie = this.props.movie;
+      var _this$props = this.props,
+          movie = _this$props.movie,
+          previous = _this$props.previous;
       if (!movie) return null;
       return _react.default.createElement("div", {
         className: "movie-view"
       }, _react.default.createElement("img", {
         className: "movie-poster",
-        src: movie.ImagePath
+        src: movie.image
       }), _react.default.createElement("div", {
         className: "movie-title"
       }, _react.default.createElement("span", {
@@ -33574,19 +33576,24 @@ function (_Component) {
         className: "label"
       }, "Description: "), _react.default.createElement("span", {
         className: "value"
-      }, movie.Description)), _react.default.createElement("div", {
+      }, movie.description)), _react.default.createElement("div", {
         className: "movie-genre"
       }, _react.default.createElement("span", {
         className: "label"
       }, "Genre: "), _react.default.createElement("span", {
         className: "value"
-      }, movie.Genre.Name)), _react.default.createElement("div", {
+      }, movie.genre.name)), _react.default.createElement("div", {
         className: "movie-director"
       }, _react.default.createElement("span", {
         className: "label"
       }, "Director: "), _react.default.createElement("span", {
         className: "value"
-      }, movie.Director.Name)));
+      }, movie.director.name)), _react.default.createElement("button", {
+        className: "back-button",
+        onClick: function onClick() {
+          return previous(movie);
+        }
+      }, "Back"));
     }
   }]);
 
@@ -33683,20 +33690,22 @@ function (_Component) {
 
       var _this$state = this.state,
           movies = _this$state.movies,
-          selectedMovie = _this$state.selectedMovie; // Before the movies have been loaded
-
+          selectedMovie = _this$state.selectedMovie;
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
       return _react.default.createElement("div", {
         className: "main-view"
-      }, console.log(movies[2].movie), selectedMovie ? _react.default.createElement(_movieView.MovieView, {
-        movie: selectedMovie
+      }, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
+        movie: selectedMovie,
+        previous: function previous(movie) {
+          return _this3.onMovieClick(!movie);
+        }
       }) : movies.map(function (movie) {
         return _react.default.createElement(_movieCard.MovieCard, {
           key: movie._id,
           movie: movie,
-          onClick: function onClick(movie) {
+          click: function click(movie) {
             return _this3.onMovieClick(movie);
           }
         });
@@ -33868,7 +33877,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49161" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55201" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
