@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import PropTypes from 'prop-types';
 
 import "./login-view.scss";
 
@@ -14,7 +15,6 @@ export const LoginView = (props) => {
     props.onLoggedIn(username);
   }
 
-  const { register } = props;
 
   return (
     <Container className="login-form">
@@ -41,6 +41,9 @@ export const LoginView = (props) => {
         </Form.Text>
       </Form>
     </Container>
-
   )
+}
+
+LoginView.PropTypes = {
+  onLoggedIn: PropTypes.func.isRequired
 }

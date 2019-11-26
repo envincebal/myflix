@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import PropTypes from 'prop-types';
 
 import "./registration-view.scss";
 
@@ -13,7 +14,7 @@ export const RegistrationView = (props) => {
 
   const handleSubmit = () => {
     console.log(username, password);
-    props.onLoggedIn(username);
+    props.onRegister(username);
   }
 
   return (
@@ -53,4 +54,8 @@ export const RegistrationView = (props) => {
       </Form>
     </Container>
   )
+}
+
+RegistrationView.PropTypes = {
+  onRegister: PropTypes.func.isRequired
 }
