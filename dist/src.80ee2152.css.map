@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.scss"],"names":[],"mappings":"AAEA;EACE;;;AAGF;EACE,OAPM;EAQN","file":"src.80ee2152.css","sourceRoot":"..\\client\\src","sourcesContent":["$color: steelblue;\r\n\r\nhtml{\r\n  font-family: 'Lato', sans-serif;\r\n}\r\n\r\n.my-flix {\r\n  color: $color;\r\n  background-color: red;\r\n}"]}

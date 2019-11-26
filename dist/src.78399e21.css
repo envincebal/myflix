@@ -1,0 +1,27 @@
+.movie-view {
+  text-align: center;
+}
+.movie-view .label {
+  font-weight: 700;
+}
+.movie-view .movie-title,
+.movie-view .movie-description,
+.movie-view .movie-genre,
+.movie-view .movie-director,
+.movie-view .back-button {
+  text-align: left;
+}
+.login-form {
+  max-width: 500px;
+  margin: 0px auto;
+}
+.registrationForm {
+  max-width: 500px;
+  margin: 0px auto;
+}
+.app-container {
+  margin: 50px 0;
+  font-family: "Roboto", sans-serif;
+}
+
+/*# sourceMappingURL=/src.78399e21.css.map */

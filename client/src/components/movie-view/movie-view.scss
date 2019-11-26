@@ -1,0 +1,15 @@
+.movie-view {
+  text-align: center;
+
+  .label{
+    font-weight: 700;
+  }
+
+  .movie-title,
+  .movie-description,
+  .movie-genre,
+  .movie-director,
+  .back-button {
+    text-align: left;
+  }
+}

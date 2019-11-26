@@ -1,12 +1,40 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 export class MovieCard extends Component {
   render() {
     const { movie, click } = this.props;
 
     return (
-      <div onClick={() => click(movie)} className="movie-card">{movie.title}</div>
+      <Card className="mb-3 mb-sm-4" style={{ width: '16rem' }}>
+        <Card.Img variant="top" src={movie.image} />
+        <Card.Body>
+          <Card.Title>{movie.title}</Card.Title>
+          <Card.Text>{movie.description}</Card.Text>
+          <Button onClick={() => click(movie)} variant="link">Open</Button>
+        </Card.Body>
+      </Card>
     );
   }
 }
 
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    genre: PropTypes.shape({
+      name: PropTypes.string,
+      description: PropTypes.string
+    }),
+    director: PropTypes.shape({
+      name: PropTypes.string,
+      description: PropTypes.string,
+      birth: PropTypes.string
+    }),
+    featured: PropTypes.bool
+  }).isRequired,
+  click: PropTypes.func.isRequired
+};
