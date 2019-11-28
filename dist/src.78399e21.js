@@ -36199,7 +36199,7 @@ module.hot.accept(reloadCSS);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.LoginView = void 0;
+exports.LoginView = LoginView;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -36229,7 +36229,7 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var LoginView = function LoginView(props) {
+function LoginView(props) {
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -36250,9 +36250,8 @@ var LoginView = function LoginView(props) {
     }).then(function (response) {
       var data = response.data;
       props.onLoggedIn(data);
-      console.log(username, password);
     }).catch(function (e) {
-      console.log("No such user.");
+      console.log('no such user');
     });
   };
 
@@ -36260,15 +36259,13 @@ var LoginView = function LoginView(props) {
     className: "login-form"
   }, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
-  }, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
+  }, _react.default.createElement(_Form.default.Label, null, "Username:"), _react.default.createElement(_Form.default.Control, {
     type: "text",
     placeholder: "Enter username",
     value: username,
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
-  }), _react.default.createElement(_Form.default.Text, {
-    className: "text-muted"
   })), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicPassword"
   }, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
@@ -36278,16 +36275,11 @@ var LoginView = function LoginView(props) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  })), _react.default.createElement(_Form.default.Group, {
-    controlId: "formBasicCheckbox"
-  }, _react.default.createElement(_Form.default.Check, {
-    type: "checkbox",
-    label: "Check me out"
   })), _react.default.createElement(_Button.default, {
     variant: "primary",
     type: "submit",
     onClick: handleSubmit
-  }, "Log In"), _react.default.createElement(_Form.default.Text, {
+  }, "Submit"), _react.default.createElement(_Form.default.Text, {
     className: "text-muted"
   }, "New user? Sign up for an account ", _react.default.createElement("a", {
     href: "#",
@@ -36295,9 +36287,8 @@ var LoginView = function LoginView(props) {
       return props.onClick();
     }
   }, "HERE"))));
-};
+}
 
-exports.LoginView = LoginView;
 LoginView.propTypes = {
   onLoggedIn: _propTypes.default.func.isRequired
 };
@@ -36483,19 +36474,27 @@ function (_Component) {
 
       _axios.default.get(endpoint, {
         headers: {
-          Authorization: "Bearer " + token
+          Authorization: "Bearer ".concat(token)
         }
-      }).then(function (res) {
+      }).then(function (response) {
         _this.setState({
-          movies: res.data
+          movies: response.data
         });
-      }).catch(function (err) {
-        return console.log(err);
+      }).catch(function (error) {
+        console.log(error);
       });
     };
 
     _this.componentDidMount = function () {
-      _this.getMovies();
+      var accessToken = localStorage.getItem('token');
+
+      if (accessToken !== null) {
+        _this.setState({
+          user: localStorage.getItem('user')
+        });
+
+        _this.getMovies(accessToken);
+      }
     };
 
     _this.onMovieClick = function (movie) {
@@ -36511,8 +36510,8 @@ function (_Component) {
         user: authData.user.Username
       });
 
-      localStorage.setItem("token", authData.token);
-      localStorage.setItem("user", authData.user.Username);
+      localStorage.setItem('token', authData.token);
+      localStorage.setItem('user', authData.user.Username);
 
       _this.getMovies(authData.token);
     };

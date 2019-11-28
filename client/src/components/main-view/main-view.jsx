@@ -24,16 +24,26 @@ export class MainView extends Component {
   getMovies = (token) => {
     const endpoint = "https://shielded-anchorage-97078.herokuapp.com/movies";
     axios.get(endpoint, {
-      headers: { Authorization: "Bearer " + token }
+      headers: { Authorization: `Bearer ${token}` }
     })
-      .then(res => {
-        this.setState({ movies: res.data })
+      .then(response => {
+        this.setState({
+          movies: response.data
+        });
       })
-      .catch(err => console.log(err));
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   componentDidMount = () => {
-    this.getMovies()
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
+      });
+      this.getMovies(accessToken);
+    }
   }
 
 
@@ -49,8 +59,8 @@ export class MainView extends Component {
       user: authData.user.Username
     });
 
-    localStorage.setItem("token", authData.token);
-    localStorage.setItem("user", authData.user.Username);
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
   }
 
