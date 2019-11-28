@@ -36242,7 +36242,7 @@ function LoginView(props) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    var loginUrl = "https://shielded-anchorage-97078.herokuapp.com/login";
+    var loginUrl = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/login";
 
     _axios.default.post(loginUrl, {
       Username: username,
@@ -36470,7 +36470,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
 
     _this.getMovies = function (token) {
-      var endpoint = "https://shielded-anchorage-97078.herokuapp.com/movies";
+      var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
 
       _axios.default.get(endpoint, {
         headers: {
