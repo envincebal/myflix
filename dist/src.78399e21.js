@@ -36203,11 +36203,15 @@ exports.LoginView = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 require("./login-view.scss");
 
@@ -36236,18 +36240,28 @@ var LoginView = function LoginView(props) {
       password = _useState4[0],
       setPassword = _useState4[1];
 
-  var handleSubmit = function handleSubmit() {
-    console.log(username, password);
-    props.onLoggedIn(username);
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    var loginUrl = "https://shielded-anchorage-97078.herokuapp.com/login";
+
+    _axios.default.post(loginUrl, {
+      Username: username,
+      Password: password
+    }).then(function (response) {
+      var data = response.data;
+      props.onLoggedIn(data);
+      console.log(username, password);
+    }).catch(function (e) {
+      console.log("No such user.");
+    });
   };
 
-  var register = props.register;
   return _react.default.createElement(_Container.default, {
     className: "login-form"
   }, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
-    type: "email",
+    type: "text",
     placeholder: "Enter username",
     value: username,
     onChange: function onChange(e) {
@@ -36284,7 +36298,10 @@ var LoginView = function LoginView(props) {
 };
 
 exports.LoginView = LoginView;
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
+LoginView.propTypes = {
+  onLoggedIn: _propTypes.default.func.isRequired
+};
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","prop-types":"../node_modules/prop-types/index.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -36304,6 +36321,8 @@ var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 require("./registration-view.scss");
 
@@ -36344,7 +36363,7 @@ var RegistrationView = function RegistrationView(props) {
 
   var handleSubmit = function handleSubmit() {
     console.log(username, password);
-    props.onLoggedIn(username);
+    props.onRegister(username);
   };
 
   return _react.default.createElement(_Container.default, {
@@ -36394,7 +36413,10 @@ var RegistrationView = function RegistrationView(props) {
 };
 
 exports.RegistrationView = RegistrationView;
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","./registration-view.scss":"components/registration-view/registration-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+RegistrationView.ropTypes = {
+  onRegister: _propTypes.default.func.isRequired
+};
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","prop-types":"../node_modules/prop-types/index.js","./registration-view.scss":"components/registration-view/registration-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36456,8 +36478,49 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
 
+    _this.getMovies = function (token) {
+      var endpoint = "https://shielded-anchorage-97078.herokuapp.com/movies";
+
+      _axios.default.get(endpoint, {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      }).then(function (res) {
+        _this.setState({
+          movies: res.data
+        });
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    };
+
+    _this.componentDidMount = function () {
+      _this.getMovies();
+    };
+
+    _this.onMovieClick = function (movie) {
+      _this.setState({
+        selectedMovie: movie
+      });
+    };
+
+    _this.onLoggedIn = function (authData) {
+      console.log(authData);
+
+      _this.setState({
+        user: authData.user.Username
+      });
+
+      localStorage.setItem("token", authData.token);
+      localStorage.setItem("user", authData.user.Username);
+
+      _this.getMovies(authData.token);
+    };
+
     _this.onRegister = function () {
-      if (!_this.state.register) {
+      var register = _this.state.register;
+
+      if (!register) {
         _this.setState({
           register: true
         });
@@ -36478,40 +36541,9 @@ function (_Component) {
   }
 
   _createClass(MainView, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var endpoint = "https://shielded-anchorage-97078.herokuapp.com/movies";
-
-      _axios.default.get(endpoint).then(function (res) {
-        console.log(res.data[0]);
-
-        _this2.setState({
-          movies: res.data
-        });
-      }).catch(function (err) {
-        return console.log(err);
-      });
-    }
-  }, {
-    key: "onMovieClick",
-    value: function onMovieClick(movie) {
-      this.setState({
-        selectedMovie: movie
-      });
-    }
-  }, {
-    key: "onLoggedIn",
-    value: function onLoggedIn(user) {
-      this.setState({
-        user: user
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var _this$state = this.state,
           movies = _this$state.movies,
@@ -36521,7 +36553,7 @@ function (_Component) {
       if (!user && !register) return _react.default.createElement(_loginView.LoginView, {
         onClick: this.onRegister,
         onLoggedIn: function onLoggedIn(user) {
-          return _this3.onLoggedIn(user);
+          return _this2.onLoggedIn(user);
         }
       });
       if (register) return _react.default.createElement(_registrationView.RegistrationView, {
@@ -36535,7 +36567,7 @@ function (_Component) {
       }, _react.default.createElement(_Container.default, null, _react.default.createElement(_Row.default, null, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
         movie: selectedMovie,
         previous: function previous(movie) {
-          return _this3.onMovieClick(!movie);
+          return _this2.onMovieClick(!movie);
         }
       }) : movies.map(function (movie) {
         return _react.default.createElement(_Col.default, {
@@ -36547,7 +36579,7 @@ function (_Component) {
           key: movie._id,
           movie: movie,
           click: function click(movie) {
-            return _this3.onMovieClick(movie);
+            return _this2.onMovieClick(movie);
           }
         }));
       }))));
@@ -36651,7 +36683,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49821" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59926" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -10,9 +11,22 @@ export const LoginView = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
-    console.log(username, password);
-    props.onLoggedIn(username);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const loginUrl = "https://shielded-anchorage-97078.herokuapp.com/login";
+
+    axios.post(loginUrl, {
+      Username: username,
+      Password: password
+    })
+      .then(response => {
+        const data = response.data;
+        props.onLoggedIn(data);
+        console.log(username, password);
+      })
+      .catch(e => {
+        console.log("No such user.")
+      });
   }
 
 
@@ -21,7 +35,7 @@ export const LoginView = (props) => {
       <Form>
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="email" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
+          <Form.Control type="text" placeholder="Enter username" value={username} onChange={e => setUsername(e.target.value)} />
           <Form.Text className="text-muted">
           </Form.Text>
         </Form.Group>
@@ -44,6 +58,6 @@ export const LoginView = (props) => {
   )
 }
 
-LoginView.PropTypes = {
+LoginView.propTypes = {
   onLoggedIn: PropTypes.func.isRequired
 }

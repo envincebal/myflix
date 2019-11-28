@@ -21,44 +21,56 @@ export class MainView extends Component {
     };
   }
 
-  componentDidMount() {
+  getMovies = (token) => {
     const endpoint = "https://shielded-anchorage-97078.herokuapp.com/movies";
-    axios.get(endpoint)
+    axios.get(endpoint, {
+      headers: { Authorization: "Bearer " + token }
+    })
       .then(res => {
-        console.log(res.data[0]);
         this.setState({ movies: res.data })
       })
       .catch(err => console.log(err));
   }
 
+  componentDidMount = () => {
+    this.getMovies()
+  }
 
-  onMovieClick(movie) {
+
+  onMovieClick = (movie) => {
     this.setState({
       selectedMovie: movie
     });
   }
 
-  onLoggedIn(user) {
+  onLoggedIn = (authData) => {
+    console.log(authData);
     this.setState({
-      user
+      user: authData.user.Username
     });
+
+    localStorage.setItem("token", authData.token);
+    localStorage.setItem("user", authData.user.Username);
+    this.getMovies(authData.token);
   }
+
   onRegister = () => {
-    if(!this.state.register){
-      this.setState({register: true});
-    }else{
-      this.setState({register: false});
+    const { register } = this.state;
+
+    if (!register) {
+      this.setState({ register: true });
+    } else {
+      this.setState({ register: false });
     }
-    
   }
 
   render() {
     const { movies, selectedMovie, user, register } = this.state;
 
     if (!user && !register) return <LoginView onClick={this.onRegister} onLoggedIn={user => this.onLoggedIn(user)} />
-    if (register) return <RegistrationView  onClick={this.onRegister}  />
+    if (register) return <RegistrationView onClick={this.onRegister} />
     if (!movies) return <div className="main-view" />;
-    
+
     return (
       <div className="main-view">
         <Container>
@@ -68,7 +80,7 @@ export class MainView extends Component {
             ) : (
                 movies.map(movie => (
                   <Col key={movie._id} xs={12} sm={6} md={4}>
-                  <MovieCard key={movie._id} movie={movie} click={movie => this.onMovieClick(movie)} />
+                    <MovieCard key={movie._id} movie={movie} click={movie => this.onMovieClick(movie)} />
                   </Col>
                 ))
               )
