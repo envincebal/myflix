@@ -3,16 +3,15 @@ import Container from "react-bootstrap/Container";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import { Link } from "react-router-dom";
 
 import "./movie-view.scss"
 
 export class MovieView extends Component {
   constructor() {
     super();
-
     this.state = {};
   }
-
 
   render() {
     const { movie, previous } = this.props;
@@ -24,7 +23,7 @@ export class MovieView extends Component {
         <Row>
           <Col md={{ span: 6, offset: 3 }}>
             <div className="movie-view">
-              <img className="movie-poster" style={{textAlign: "center"}} src={movie.image} />
+              <img className="movie-poster" style={{ textAlign: "center" }} src={movie.image} />
               <div className="movie-title">
                 <span className="label">Title: </span>
                 <span className="value">{movie.title}</span>
@@ -43,8 +42,14 @@ export class MovieView extends Component {
                 <span className="value">{movie.director.name}</span>
               </div>
               <Button variant="primary" className="back-button" onClick={() => previous(movie)}>
-        Back
+                Back
   </Button>
+              <Link to={"/genres/" + movie.genre.name}>
+                <Button variant="link">Genre</Button>
+              </Link>
+              <Link to={"/directors/" + movie.director.name}>
+                <Button variant="link">Director</Button>
+              </Link>
             </div>
           </Col>
         </Row>

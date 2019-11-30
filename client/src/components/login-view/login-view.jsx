@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
 import "./login-view.scss";
 
@@ -13,11 +14,13 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const loginUrl = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/login";
+    let loginUrl = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/login";
 
-    axios.post(loginUrl, {
-      Username: username,
-      Password: password
+    axios.post(loginUrl, null, {
+      params: {
+        Username: username,
+        Password: password
+      }
     })
       .then(response => {
         const data = response.data;
@@ -25,9 +28,10 @@ export function LoginView(props) {
       })
       .catch(e => {
         console.log('no such user')
-      });
-  }
 
+      })
+
+  }
 
   return (
     <Container className="login-form">
@@ -45,7 +49,7 @@ export function LoginView(props) {
           Submit
         </Button>
         <Form.Text className="text-muted">
-          New user? Sign up for an account <a href="#" onClick={() => props.onClick()}>HERE</a>
+          New user? Sign up for an account <Link to={"/register"}>HERE</Link>
         </Form.Text>
       </Form>
     </Container>

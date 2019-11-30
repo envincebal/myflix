@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import PropTypes from 'prop-types';
+import axios from 'axios';
+import { Link } from "react-router-dom";
 
 import "./registration-view.scss";
 
@@ -12,34 +13,47 @@ export const RegistrationView = (props) => {
   const [email, setEmail] = useState("");
   const [dob, setDOB] = useState("");
 
-  const handleSubmit = () => {
-    console.log(username, password);
-    props.onRegister(username);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const loginUrl = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users";
+    axios.post(loginUrl, {
+      Username: username,
+      Password: password,
+      Email: email,
+      DOB: dob
+    })
+      .then((response) => {
+        const data = response.data;
+        console.log(data);
+        window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+      })
+      .catch((e) => {
+        console.log("error registering the user");
+      });
   }
 
   return (
     <Container className="registrationForm">
       <Form>
+        <Form.Group controlId="formBasicUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+        </Form.Group>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => createEmail(e.target.value)} />
+          <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
           <Form.Text className="emailShare">
             We"ll never share your email with anyone else.
           </Form.Text>
         </Form.Group>
-
-        <Form.Group controlId="formBasicUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Username" />
-        </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
-        </Form.Group>
-
         <Form.Group controlId="formBasicDob">
           <Form.Label>Date of Birth</Form.Label>
-          <Form.Control type="date" />
+          <Form.Control type="date" value={dob} onChange={e => setDOB(e.target.value)} />
         </Form.Group>
 
         <Form.Group controlId="formBasicChecbox">
@@ -49,13 +63,10 @@ export const RegistrationView = (props) => {
           Register
         </Button>
         <Form.Text className="text-muted">
-          Already have an account? Log in <a href="#" onClick={() => props.onClick()}>HERE</a>
+          Already have an account? Log in <Link to={"/"}>HERE</Link>
         </Form.Text>
       </Form>
     </Container>
   )
 }
 
-RegistrationView.propTypes = {
-  onRegister: PropTypes.func.isRequired
-}
