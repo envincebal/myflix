@@ -11,7 +11,7 @@ export class MovieCard extends Component {
     return (
       <Card className="mb-3 mb-sm-4" style={{ width: '16rem' }}>
         <Card.Img variant="top" src={movie.image} />
-        <Card.Body>
+        <Card.Body> 
           <Card.Title>{movie.title}</Card.Title>
           <Card.Text>{movie.description}</Card.Text>
           <Link to={"/movies/" + movie._id}>

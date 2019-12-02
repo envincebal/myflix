@@ -3,6 +3,8 @@ import Container from "react-bootstrap/Container";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import "./genre-view.scss";
+
 export function GenreView(props) {
   const { movie } = props;
   return (
@@ -10,7 +12,7 @@ export function GenreView(props) {
       <Row>
         <Col md={{ span: 6, offset: 3 }}>
           <div className="genre-view">
-
+          {console.log(movie)}
             <div className="movie-title">
               <span className="label">Genre: </span>
               <span className="value">{movie.genre.name}</span>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Container from "react-bootstrap/Container";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -7,14 +7,9 @@ import { Link } from "react-router-dom";
 
 import "./movie-view.scss"
 
-export class MovieView extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
+export function MovieView (props) {
 
-  render() {
-    const { movie, previous } = this.props;
+    const { movie, previous } = props;
 
     if (!movie) return null;
 
@@ -42,8 +37,7 @@ export class MovieView extends Component {
                 <span className="value">{movie.director.name}</span>
               </div>
               <Button variant="primary" className="back-button" onClick={() => previous(movie)}>
-                Back
-  </Button>
+                Back</Button>
               <Link to={"/genres/" + movie.genre.name}>
                 <Button variant="link">Genre</Button>
               </Link>
@@ -57,6 +51,5 @@ export class MovieView extends Component {
       </Container>
 
     );
-  }
 }
 

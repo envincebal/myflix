@@ -11,7 +11,7 @@ export const RegistrationView = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [dob, setDOB] = useState("");
+  const [birthdate, setBirthDate] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,11 +21,10 @@ export const RegistrationView = (props) => {
       Username: username,
       Password: password,
       Email: email,
-      DOB: dob
+      BirthDate: birthdate
     })
-      .then((response) => {
+      .then(response => {
         const data = response.data;
-        console.log(data);
         window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
       })
       .catch((e) => {
@@ -53,7 +52,7 @@ export const RegistrationView = (props) => {
         </Form.Group>
         <Form.Group controlId="formBasicDob">
           <Form.Label>Date of Birth</Form.Label>
-          <Form.Control type="date" value={dob} onChange={e => setDOB(e.target.value)} />
+          <Form.Control type="date" value={birthdate} onChange={e => setBirthDate(e.target.value)} />
         </Form.Group>
 
         <Form.Group controlId="formBasicChecbox">

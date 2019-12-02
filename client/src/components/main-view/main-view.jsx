@@ -4,12 +4,14 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
 import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
+import { ProfileView } from '../profile-view/profile-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import Button from 'react-bootstrap/Button';
 
@@ -31,7 +33,7 @@ export class MainView extends Component {
     })
       .then(response => {
         this.setState({
-          movies: response.data
+          movies: response.data,
         });
       })
       .catch(error => {
@@ -43,7 +45,8 @@ export class MainView extends Component {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
       this.setState({
-        user: localStorage.getItem('user')
+        user: localStorage.getItem('user'),
+        userData: localStorage.getItem('data')
       });
       this.getMovies(accessToken);
     }
@@ -65,7 +68,6 @@ export class MainView extends Component {
     this.getMovies(authData.token);
   }
 
-
   onLogOut = () => {
     this.setState({
       user: null,
@@ -79,14 +81,16 @@ export class MainView extends Component {
   render() {
     const { movies, user } = this.state;
 
-
-
     if (!movies) return <div className="main-view" />;
 
     return (
       <div className="main-view">
         <Router>
+        {console.log(localStorage.getItem("token"))}
           <Container>
+            <Link to={"/profile"}>
+              <Button variant="link">Profile</Button>
+            </Link>
             <Row>
               <Route exact path="/" render={() => {
                 if (!user) {
@@ -109,16 +113,23 @@ export class MainView extends Component {
                 return (
                   <MovieView movie={movies.find(m => m._id === match.params.movieId)} />
                 )
+
               }
               } />
-              <Route exact path="/genres/:name" render={({match}) => {
+              <Route exact path="/genres/:name" render={({ match }) => {
                 return (
                   <GenreView movie={movies.find(m => m.genre.name === match.params.name)} />
                 )
               }} />
-              <Route exact path="/directors/:name" render={({match}) => {
+              <Route exact path="/directors/:name" render={({ match }) => {
                 return (
                   <DirectorView movie={movies.find(m => m.director.name === match.params.name)} />
+                )
+              }} />
+
+              <Route exact path="/profile" render={() => {
+                return (
+                  <ProfileView user={user} token={localStorage.getItem("token")} />
                 )
               }} />
             </Row>

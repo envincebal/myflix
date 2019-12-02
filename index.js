@@ -99,9 +99,7 @@ app.get("/director/:Name", passport.authenticate('jwt', {
 });
 
 // Get user by username
-app.get("/users/:Username", passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.get("/users/:Username", (req, res) => {
 
   Users.findOne({
       Username: req.params.Username
@@ -115,49 +113,58 @@ app.get("/users/:Username", passport.authenticate('jwt', {
     })
 })
 
-app.post('/users', 
+app.post('/users',
   // Validation logic here for request
   //you can either use a chain of methods like .not().isEmpty()
   //which means "opposite of isEmpty" in plain english "is not empty"
   //or use .isLength({min: 5}) which means
   //minimum value of 5 characters are only allowed
-  [check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()],(req, res) => {
+  [check('Username', 'Username is required').isLength({
+      min: 5
+    }),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ], (req, res) => {
 
-  // check the validation object for errors
-  var errors = validationResult(req);
+    // check the validation object for errors
+    var errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-
-  var hashedPassword = Users.hashPassword(req.body.Password);
-  Users.findOne({ Username : req.body.Username }) // Search to see if a user with the requested username already exists
-  .then(function(user) {
-    if (user) {
-      //If the user is found, send a response that it already exists
-        return res.status(400).send(req.body.Username + " already exists");
-    } else {
-      Users
-      .create({
-        Username : req.body.Username,
-        Password: hashedPassword,
-        Email : req.body.Email,
-        BirthDate : req.body.BirthDate
-      })
-      .then(function(user) { res.status(201).json(user) })
-      .catch(function(error) {
-          console.error(error);
-          res.status(500).send("Error: " + error);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({
+        errors: errors.array()
       });
     }
-  }).catch(function(error) {
-    console.error(error);
-    res.status(500).send("Error: " + error);
+
+    var hashedPassword = Users.hashPassword(req.body.Password);
+    Users.findOne({
+        Username: req.body.Username
+      }) // Search to see if a user with the requested username already exists
+      .then(function (user) {
+        if (user) {
+          //If the user is found, send a response that it already exists
+          return res.status(400).send(req.body.Username + " already exists");
+        } else {
+          Users
+            .create({
+              Username: req.body.Username,
+              Password: hashedPassword,
+              Email: req.body.Email,
+              BirthDate: req.body.BirthDate
+            })
+            .then(user => {
+              res.status(201).json(user)
+            })
+            .catch(error => {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
+        }
+      }).catch(error => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
   });
-});
 
 // Allow users to update their user info (username, password, email, date of birth)
 app.put("/users/:Username", passport.authenticate('jwt', {
@@ -170,7 +177,7 @@ app.put("/users/:Username", passport.authenticate('jwt', {
         Username: req.body.Username,
         Password: req.body.Password,
         Email: req.body.Email,
-        BirthDate: req.body.Birthday
+        BirthDate: req.body.BirthDate
       }
     }, {
       new: true
@@ -243,6 +250,6 @@ app.delete("/users/:Username", passport.authenticate('jwt', {
 });
 
 var port = process.env.PORT || 3000;
-app.listen(port, "0.0.0.0", function() {
-console.log("Listening on Port 3000");
+app.listen(port, "0.0.0.0", function () {
+  console.log("Listening on Port 3000");
 });

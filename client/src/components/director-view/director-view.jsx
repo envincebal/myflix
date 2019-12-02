@@ -3,6 +3,8 @@ import Container from "react-bootstrap/Container";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import "./director-view.scss";
+
 export function DirectorView(props) {
   const { movie } = props;
   return (
@@ -10,7 +12,7 @@ export function DirectorView(props) {
       <Row>
         <Col md={{ span: 6, offset: 3 }}>
           <div className="movie-view">
-            <div className="movie-title">
+            <div className="genre-title">
               <span className="label">Name: </span>
               <span className="value">{movie.director.name}</span>
             </div>
