@@ -39454,7 +39454,7 @@ function ProfileView(props) {
       token = props.token;
   return _react.default.createElement(_Container.default, {
     className: "registrationForm"
-  }, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Group, {
+  }, _react.default.createElement(_Form.default, null, console.log(localStorage.getItem("token")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -39777,7 +39777,7 @@ function (_Component) {
       });
       return _react.default.createElement("div", {
         className: "main-view"
-      }, _react.default.createElement(_reactRouterDom.BrowserRouter, null, console.log(localStorage.getItem("token")), _react.default.createElement(_Container.default, null, _react.default.createElement(_reactRouterDom.Link, {
+      }, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_Container.default, null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/profile"
       }, _react.default.createElement(_Button.default, {
         variant: "link"
@@ -39848,7 +39848,7 @@ function (_Component) {
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
-        path: "/profile",
+        path: "/profile/:na",
         render: function render() {
           return _react.default.createElement(_profileView.ProfileView, {
             user: user,

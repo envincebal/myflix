@@ -86,7 +86,7 @@ export class MainView extends Component {
     return (
       <div className="main-view">
         <Router>
-        {console.log(localStorage.getItem("token"))}
+
           <Container>
             <Link to={"/profile"}>
               <Button variant="link">Profile</Button>
@@ -127,7 +127,7 @@ export class MainView extends Component {
                 )
               }} />
 
-              <Route exact path="/profile" render={() => {
+              <Route exact path="/profile/:name" render={() => {
                 return (
                   <ProfileView user={user} token={localStorage.getItem("token")} />
                 )

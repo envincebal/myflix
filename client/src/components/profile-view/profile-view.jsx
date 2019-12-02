@@ -18,30 +18,28 @@ export function ProfileView(props) {
     const { user, token } = props;
     const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + user;
 
-    axios.put(userURL,{
-    
+    axios.put(userURL, {
       Username: username,
       Password: password,
       Email: email,
       BirthDate: birthdate
-      
-    },{
+    }, {
       headers: { Authorization: `Bearer ${token}` }
-    
-  })
-    .then(response => {
-      const data = response.data;
-      console.log(data) // the second argument '_self' is necessary so that the page will open in the current tab
     })
-    .catch((e) => {
-      console.log("error registering the user");
-    });
+      .then(response => {
+        const data = response.data;
+        console.log(data) // the second argument '_self' is necessary so that the page will open in the current tab
+      })
+      .catch((e) => {
+        console.log("error registering the user");
+      });
   }
 
   const { user, token } = props;
   return (
     <Container className="registrationForm">
       <Form>
+        {console.log(localStorage.getItem("token"))}
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control type="text" placeholder="Username" value={user.Username} onChange={e => setUsername(e.target.value)} />
@@ -58,7 +56,7 @@ export function ProfileView(props) {
           <Form.Label>Date of Birth</Form.Label>
           <Form.Control type="date" value={user.BirthDate} onChange={e => setBirthDate(e.target.value)} />
         </Form.Group>
-      <Button onClick={updateUserInfo}>Update Info</Button>
+        <Button onClick={updateUserInfo}>Update Info</Button>
       </Form>
     </Container>
   );
