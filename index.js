@@ -232,9 +232,7 @@ app.delete("/users/:Username/Movies/:MovieID", passport.authenticate('jwt', {
 });
 
 // Allow existing users to deregister
-app.delete("/users/:Username", passport.authenticate('jwt', {
-  session: false
-}), (req, res) => {
+app.delete("/users/:Username", (req, res) => {
   Users.findOneAndRemove({
     Username: req.params.Username
   }).then(user => {
