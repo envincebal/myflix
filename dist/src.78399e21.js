@@ -39448,7 +39448,9 @@ function ProfileView(props) {
     }).catch(function (e) {
       console.log("error registering the user");
     });
-  };
+  }; // const deleteProfile = () => {
+  // }
+
 
   var user = props.user,
       token = props.token;
@@ -39848,7 +39850,7 @@ function (_Component) {
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
-        path: "/profile/:na",
+        path: "/profile",
         render: function render() {
           return _react.default.createElement(_profileView.ProfileView, {
             user: user,

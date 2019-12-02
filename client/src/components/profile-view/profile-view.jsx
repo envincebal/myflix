@@ -35,6 +35,10 @@ export function ProfileView(props) {
       });
   }
 
+  // const deleteProfile = () => {
+
+  // }
+
   const { user, token } = props;
   return (
     <Container className="registrationForm">

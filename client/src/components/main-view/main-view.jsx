@@ -127,7 +127,7 @@ export class MainView extends Component {
                 )
               }} />
 
-              <Route exact path="/profile/:name" render={() => {
+              <Route exact path="/profile" render={() => {
                 return (
                   <ProfileView user={user} token={localStorage.getItem("token")} />
                 )
