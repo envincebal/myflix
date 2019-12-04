@@ -21,7 +21,9 @@ export class MainView extends Component {
 
     this.state = {
       movies: [],
+      favorites: [],
       user: null,
+      userData: null,
       register: false
     };
   }
@@ -41,57 +43,76 @@ export class MainView extends Component {
       });
   }
 
+  addToFavorites = (movieId) => {
+    const endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
+    axios.get(endpoint, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    })
+      .then(response => {
+        let movies = response.data;
+
+        movies.forEach(movie => {
+          if (movie._id === movieId) {
+            this.setState(prevState => ({
+              favorites: prevState.favorites.concat(movie)
+            }))
+          }
+        })
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+  }
+
   componentDidMount = () => {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
       this.setState({
         user: localStorage.getItem('user'),
-        userData: localStorage.getItem('data')
+        userData: localStorage.getItem('userData')
       });
       this.getMovies(accessToken);
     }
   }
 
-  onMovieClick = (movie) => {
-    this.setState({
-      selectedMovie: movie
-    });
-  }
-
   onLoggedIn = (authData) => {
     this.setState({
-      user: authData.user.Username
+      user: authData.user.Username,
+      userData: authData.user.userData
     });
 
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
+    localStorage.setItem('userData', JSON.stringify(authData.user));
     this.getMovies(authData.token);
   }
 
   onLogOut = () => {
     this.setState({
       user: null,
-      register: null
+      register: null,
+      userData: null
     });
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.clear();
   }
 
   render() {
-    const { movies, user } = this.state;
+    const { movies, user, favorites } = this.state;
 
     if (!movies) return <div className="main-view" />;
 
     return (
       <div className="main-view">
         <Router>
-
           <Container>
+          <Button onClick={this.onLogOut}>back</Button>
             <Link to={"/profile"}>
               <Button variant="link">Profile</Button>
             </Link>
             <Row>
+              {console.log(this.state.userData)}
               <Route exact path="/" render={() => {
                 if (!user) {
                   return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
@@ -99,13 +120,13 @@ export class MainView extends Component {
                 return movies.map(m => {
                   return (
                     <Col key={m._id} xs={12} sm={6} md={4}>
-                      <MovieCard key={m._id} movie={m} />
-                      <Button onClick={this.onLogOut}>back</Button>
+                      <MovieCard key={m._id} value={m._id} movie={m} addFavorites={movieId => this.addToFavorites(movieId)} />
                     </Col>
                   );
                 })
               }
               } />
+
               <Route exact path="/register" render={() => {
                 return <RegistrationView />
               }} />
@@ -113,7 +134,6 @@ export class MainView extends Component {
                 return (
                   <MovieView movie={movies.find(m => m._id === match.params.movieId)} />
                 )
-
               }
               } />
               <Route exact path="/genres/:name" render={({ match }) => {

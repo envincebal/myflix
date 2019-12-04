@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import "./login-view.scss";
 
-export function LoginView(props) {
+export const LoginView = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 

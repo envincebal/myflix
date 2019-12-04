@@ -1,3 +1,7 @@
+.added {
+  color: #36c936;
+  display: inline;
+}
 .movie-view {
   text-align: center;
 }
@@ -20,6 +24,10 @@
 }
 .label {
   font-weight: 700;
+}
+.profile-view {
+  margin: 0 auto;
+  border-radius: 15px;
 }
 .registrationForm {
   max-width: 500px;

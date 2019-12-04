@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 import "./movie-view.scss"
 
-export function MovieView (props) {
+export const MovieView = (props) => {
 
     const { movie, previous } = props;
 

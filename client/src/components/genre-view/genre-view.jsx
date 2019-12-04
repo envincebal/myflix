@@ -5,14 +5,13 @@ import Row from 'react-bootstrap/Row';
 
 import "./genre-view.scss";
 
-export function GenreView(props) {
+export const GenreView = (props) => {
   const { movie } = props;
   return (
     <Container>
       <Row>
         <Col md={{ span: 6, offset: 3 }}>
           <div className="genre-view">
-          {console.log(movie)}
             <div className="movie-title">
               <span className="label">Genre: </span>
               <span className="value">{movie.genre.name}</span>

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 
 import "./director-view.scss";
 
-export function DirectorView(props) {
+export const DirectorView = (props) => {
   const { movie } = props;
   return (
     <Container>
