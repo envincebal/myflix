@@ -9,7 +9,6 @@ const {
   check,
   validationResult
 } = require('express-validator');
-var auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
@@ -19,6 +18,8 @@ const Users = Models.User;
 // var allowedOrigins = ['http://localhost:3000', 'http://testsite.com'];
 
 app.use(cors());
+
+var auth = require('./auth')(app);
 
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 mongoose.connect("mongodb+srv://envincebal:.357magnum@myflixdb-luj5p.mongodb.net/myFlixDB?retryWrites=true&w=majority", {
