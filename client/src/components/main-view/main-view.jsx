@@ -111,7 +111,7 @@ export class MainView extends Component {
       register: null
     });
 
-    localStorage.clear();
+    localStorage.removeItem('token');
   }
 
   render() {
@@ -178,8 +178,6 @@ export class MainView extends Component {
             </Row>
           </Container>
         </Router>
-
-
       </div>
     );
   }

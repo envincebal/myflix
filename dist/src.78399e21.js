@@ -39892,7 +39892,7 @@ function (_Component) {
         register: null
       });
 
-      localStorage.clear();
+      localStorage.removeItem('token');
     };
 
     _this.state = {
