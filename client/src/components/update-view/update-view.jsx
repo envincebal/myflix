@@ -10,21 +10,6 @@ export const UpdateView = (props) => {
   const [email, setEmail] = useState("");
   const [birthdate, setBirthDate] = useState("");
 
-  const getUser = () => {
-    let username = localStorage.getItem('user');
-    const endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + username;
-
-    axios.get(endpoint, {
-      headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
-    })
-      .then(res => {
-        console.log(res.data);
-      })      
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
   const updateUserInfo = (e) => {
     e.preventDefault();
 
@@ -45,7 +30,6 @@ export const UpdateView = (props) => {
         localStorage.setItem("password", data.Password);
         localStorage.setItem("email", data.Email);
         localStorage.setItem("birthdate", data.BirthDate);
-        // getUser(localStorage.getItem("token"));
         console.log(data);
       })
       .catch((e) => {

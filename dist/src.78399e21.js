@@ -39648,21 +39648,6 @@ var UpdateView = function UpdateView(props) {
       birthdate = _useState8[0],
       setBirthDate = _useState8[1];
 
-  var getUser = function getUser() {
-    var username = localStorage.getItem('user');
-    var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + username;
-
-    _axios.default.get(endpoint, {
-      headers: {
-        Authorization: "Bearer ".concat(localStorage.getItem("token"))
-      }
-    }).then(function (res) {
-      console.log(res.data);
-    }).catch(function (error) {
-      console.log(error);
-    });
-  };
-
   var updateUserInfo = function updateUserInfo(e) {
     e.preventDefault();
     var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
@@ -39681,8 +39666,7 @@ var UpdateView = function UpdateView(props) {
       localStorage.setItem("user", data.Username);
       localStorage.setItem("password", data.Password);
       localStorage.setItem("email", data.Email);
-      localStorage.setItem("birthdate", data.BirthDate); // getUser(localStorage.getItem("token"));
-
+      localStorage.setItem("birthdate", data.BirthDate);
       console.log(data);
     }).catch(function (e) {
       console.log("error registering the user");
@@ -39816,20 +39800,6 @@ function (_Component) {
 
         _this.getMovies(accessToken);
       }
-    };
-
-    _this.getUser = function () {
-      var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/Vincent";
-
-      _axios.default.get(endpoint, {
-        headers: {
-          Authorization: "Bearer ".concat(localStorage.getItem("token"))
-        }
-      }).then(function (res) {
-        console.log(res.data);
-      }).catch(function (error) {
-        console.log(error);
-      });
     };
 
     _this.getMovies = function (token) {
