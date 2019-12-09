@@ -39679,10 +39679,10 @@ var UpdateView = function UpdateView(props) {
     }).then(function (response) {
       var data = response.data;
       localStorage.setItem("user", data.Username);
-      getUser(localStorage.getItem("token")); // localStorage.setItem("password", data.Password);
-      // localStorage.setItem("email", data.Email);
-      // localStorage.setItem("birthdate", data.BirthDate);
-
+      localStorage.setItem("password", data.Password);
+      localStorage.setItem("email", data.Email);
+      localStorage.setItem("birthdate", data.BirthDate);
+      getUser(localStorage.getItem("token"));
       console.log(data);
     }).catch(function (e) {
       console.log("error registering the user");
