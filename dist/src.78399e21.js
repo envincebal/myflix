@@ -39254,6 +39254,7 @@ var LoginView = function LoginView(props) {
       }
     }).then(function (response) {
       var data = response.data;
+      console.log(data);
       props.onLoggedIn(data);
     }).catch(function (e) {
       console.log('no such user');
@@ -39401,53 +39402,7 @@ var DirectorView = function DirectorView(props) {
 };
 
 exports.DirectorView = DirectorView;
-},{"react":"../node_modules/react/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","./director-view.scss":"components/director-view/director-view.scss"}],"../node_modules/react-bootstrap/esm/Jumbotron.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/extends"));
-
-var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose"));
-
-var _react = _interopRequireDefault(require("react"));
-
-var _classnames = _interopRequireDefault(require("classnames"));
-
-var _ThemeProvider = require("./ThemeProvider");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var defaultProps = {
-  fluid: false
-};
-
-var Jumbotron = _react.default.forwardRef(function (_ref, ref) {
-  var _classes;
-
-  var _ref$as = _ref.as,
-      Component = _ref$as === void 0 ? 'div' : _ref$as,
-      className = _ref.className,
-      fluid = _ref.fluid,
-      bsPrefix = _ref.bsPrefix,
-      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["as", "className", "fluid", "bsPrefix"]);
-  bsPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'jumbotron');
-  var classes = (_classes = {}, _classes[bsPrefix] = true, _classes[bsPrefix + "-fluid"] = fluid, _classes);
-  return _react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, classes)
-  }));
-});
-
-Jumbotron.defaultProps = defaultProps;
-Jumbotron.displayName = 'Jumbotron';
-var _default = Jumbotron;
-exports.default = _default;
-},{"@babel/runtime/helpers/esm/extends":"../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","react":"../node_modules/react/index.js","classnames":"../node_modules/classnames/index.js","./ThemeProvider":"../node_modules/react-bootstrap/esm/ThemeProvider.js"}],"components/profile-view/profile-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","./director-view.scss":"components/director-view/director-view.scss"}],"components/profile-view/profile-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -39462,13 +39417,13 @@ exports.ProfileView = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _Jumbotron = _interopRequireDefault(require("react-bootstrap/Jumbotron"));
-
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _reactRouterDom = require("react-router-dom");
 
 require("./profile-view.scss");
 
@@ -39495,14 +39450,17 @@ var ProfileView = function ProfileView(props) {
 
   var user = props.user,
       token = props.token;
-  return _react.default.createElement(_Jumbotron.default, {
-    fluid: true,
+  return _react.default.createElement(_Container.default, {
     className: "profile-view"
-  }, _react.default.createElement(_Container.default, null, console.log(localStorage.getItem("userData")), _react.default.createElement("h1", null, "Fluid jumbotron"), _react.default.createElement("p", null, "This is a modified jumbotron that occupies the entire horizontal space of its parent.")));
+  }, console.log(localStorage), _react.default.createElement("h4", null, "Username"), _react.default.createElement("p", null, localStorage.getItem("user")), _react.default.createElement("h4", null, "Email"), _react.default.createElement("p", null, localStorage.getItem("email")), _react.default.createElement("h4", null, "Birth Date"), _react.default.createElement("p", null, localStorage.getItem("birthdate").substr(0, 10)), _react.default.createElement(_Button.default, {
+    onClick: deleteProfile
+  }, "Delete"), _react.default.createElement(_reactRouterDom.Link, {
+    to: "/update"
+  }, _react.default.createElement(_Button.default, null, "Update")));
 };
 
 exports.ProfileView = ProfileView;
-},{"react":"../node_modules/react/index.js","react-bootstrap/Jumbotron":"../node_modules/react-bootstrap/esm/Jumbotron.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","axios":"../node_modules/axios/index.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -39637,7 +39595,144 @@ var RegistrationView = function RegistrationView(props) {
 };
 
 exports.RegistrationView = RegistrationView;
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./registration-view.scss":"components/registration-view/registration-view.scss"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./registration-view.scss":"components/registration-view/registration-view.scss"}],"components/update-view/update-view.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UpdateView = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
+
+var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+
+var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var UpdateView = function UpdateView(props) {
+  var _useState = (0, _react.useState)(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      username = _useState2[0],
+      setUsername = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(""),
+      _useState4 = _slicedToArray(_useState3, 2),
+      password = _useState4[0],
+      setPassword = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(""),
+      _useState6 = _slicedToArray(_useState5, 2),
+      email = _useState6[0],
+      setEmail = _useState6[1];
+
+  var _useState7 = (0, _react.useState)(""),
+      _useState8 = _slicedToArray(_useState7, 2),
+      birthdate = _useState8[0],
+      setBirthDate = _useState8[1];
+
+  var getUser = function getUser() {
+    var username = localStorage.getItem('user');
+    var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + username;
+
+    _axios.default.get(endpoint, {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem("token"))
+      }
+    }).then(function (res) {
+      console.log(res.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  };
+
+  var updateUserInfo = function updateUserInfo(e) {
+    e.preventDefault();
+    var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+
+    _axios.default.put(userURL + localStorage.getItem('user'), {
+      Username: username,
+      Password: password,
+      Email: email,
+      BirthDate: birthdate
+    }, {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem('token'))
+      }
+    }).then(function (response) {
+      var data = response.data;
+      localStorage.setItem("user", data.Username);
+      getUser(localStorage.getItem("token")); // localStorage.setItem("password", data.Password);
+      // localStorage.setItem("email", data.Email);
+      // localStorage.setItem("birthdate", data.BirthDate);
+
+      console.log(data);
+    }).catch(function (e) {
+      console.log("error registering the user");
+    });
+  };
+
+  return _react.default.createElement(_Container.default, {
+    className: "registrationForm"
+  }, _react.default.createElement(_Form.default, null, console.log(getUser()), _react.default.createElement(_Form.default.Group, {
+    controlId: "formBasicUsername"
+  }, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
+    type: "text",
+    placeholder: "Username",
+    value: username,
+    onChange: function onChange(e) {
+      return setUsername(e.target.value);
+    }
+  })), _react.default.createElement(_Form.default.Group, {
+    controlId: "formBasicPassword"
+  }, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
+    type: "password",
+    placeholder: "Password",
+    value: password,
+    onChange: function onChange(e) {
+      return setPassword(e.target.value);
+    }
+  })), _react.default.createElement(_Form.default.Group, {
+    controlId: "formBasicEmail"
+  }, _react.default.createElement(_Form.default.Label, null, "Email address"), _react.default.createElement(_Form.default.Control, {
+    type: "email",
+    placeholder: "Enter email",
+    value: email,
+    onChange: function onChange(e) {
+      return setEmail(e.target.value);
+    }
+  })), _react.default.createElement(_Form.default.Group, {
+    controlId: "formBasicDob"
+  }, _react.default.createElement(_Form.default.Label, null, "Date of Birth"), _react.default.createElement(_Form.default.Control, {
+    type: "date",
+    value: birthdate,
+    onChange: function onChange(e) {
+      return setBirthDate(e.target.value);
+    }
+  })), _react.default.createElement(_Button.default, {
+    onClick: updateUserInfo
+  }, "Update Info")));
+};
+
+exports.UpdateView = UpdateView;
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","axios":"../node_modules/axios/index.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39670,6 +39765,8 @@ var _directorView = require("../director-view/director-view");
 var _profileView = require("../profile-view/profile-view");
 
 var _registrationView = require("../registration-view/registration-view");
+
+var _updateView = require("../update-view/update-view");
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
@@ -39708,6 +39805,32 @@ function (_Component) {
     _classCallCheck(this, MainView);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
+
+    _this.componentDidMount = function () {
+      var accessToken = localStorage.getItem('token');
+
+      if (accessToken !== null) {
+        _this.setState({
+          user: localStorage.getItem('user')
+        });
+
+        _this.getMovies(accessToken);
+      }
+    };
+
+    _this.getUser = function () {
+      var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/Vincent";
+
+      _axios.default.get(endpoint, {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem("token"))
+        }
+      }).then(function (res) {
+        console.log(res.data);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    };
 
     _this.getMovies = function (token) {
       var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
@@ -39748,28 +39871,14 @@ function (_Component) {
       });
     };
 
-    _this.componentDidMount = function () {
-      var accessToken = localStorage.getItem('token');
-
-      if (accessToken !== null) {
-        _this.setState({
-          user: localStorage.getItem('user'),
-          userData: localStorage.getItem('userData')
-        });
-
-        _this.getMovies(accessToken);
-      }
-    };
-
     _this.onLoggedIn = function (authData) {
       _this.setState({
-        user: authData.user.Username,
-        userData: authData.user.userData
+        user: authData.user.Username
       });
 
+      console.log(authData.user);
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
-      localStorage.setItem('userData', JSON.stringify(authData.user));
 
       _this.getMovies(authData.token);
     };
@@ -39777,18 +39886,17 @@ function (_Component) {
     _this.onLogOut = function () {
       _this.setState({
         user: null,
-        register: null,
-        userData: null
+        register: null
       });
 
-      localStorage.clear();
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     };
 
     _this.state = {
       movies: [],
       favorites: [],
       user: null,
-      userData: null,
       register: false
     };
     return _this;
@@ -39808,13 +39916,15 @@ function (_Component) {
       });
       return _react.default.createElement("div", {
         className: "main-view"
-      }, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_Container.default, null, _react.default.createElement(_Button.default, {
+      }, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_Container.default, null, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/"
+      }, _react.default.createElement(_Button.default, {
         onClick: this.onLogOut
-      }, "back"), _react.default.createElement(_reactRouterDom.Link, {
+      }, "back")), _react.default.createElement(_reactRouterDom.Link, {
         to: "/profile"
       }, _react.default.createElement(_Button.default, {
         variant: "link"
-      }, "Profile")), _react.default.createElement(_Row.default, null, console.log(this.state.userData), _react.default.createElement(_reactRouterDom.Route, {
+      }, "Profile")), _react.default.createElement(_Row.default, null, _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render() {
@@ -39890,6 +40000,12 @@ function (_Component) {
             token: localStorage.getItem("token")
           });
         }
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/update",
+        render: function render() {
+          return _react.default.createElement(_updateView.UpdateView, null);
+        }
       })))));
     }
   }]);
@@ -39898,7 +40014,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.MainView = MainView;
-},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../login-view/login-view":"components/login-view/login-view.jsx","../genre-view/genre-view":"components/genre-view/genre-view.jsx","../director-view/director-view":"components/director-view/director-view.jsx","../profile-view/profile-view":"components/profile-view/profile-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"index.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Col":"../node_modules/react-bootstrap/esm/Col.js","react-bootstrap/Row":"../node_modules/react-bootstrap/esm/Row.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx","../login-view/login-view":"components/login-view/login-view.jsx","../genre-view/genre-view":"components/genre-view/genre-view.jsx","../director-view/director-view":"components/director-view/director-view.jsx","../profile-view/profile-view":"components/profile-view/profile-view.jsx","../registration-view/registration-view":"components/registration-view/registration-view.jsx","../update-view/update-view":"components/update-view/update-view.jsx","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js"}],"index.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -39991,7 +40107,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50698" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56613" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

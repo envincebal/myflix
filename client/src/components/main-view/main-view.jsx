@@ -13,6 +13,8 @@ import { GenreView } from '../genre-view/genre-view';
 import { DirectorView } from '../director-view/director-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { RegistrationView } from '../registration-view/registration-view';
+import { UpdateView } from '../update-view/update-view';
+
 import Button from 'react-bootstrap/Button';
 
 export class MainView extends Component {
@@ -23,15 +25,38 @@ export class MainView extends Component {
       movies: [],
       favorites: [],
       user: null,
-      userData: null,
       register: false
     };
+  }
+
+  componentDidMount = () => {
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
+      });
+      this.getMovies(accessToken);
+    }
+  }
+
+  getUser = () => {
+    const endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/Vincent";
+
+    axios.get(endpoint, {
+      headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}
+    })
+      .then(res => {
+        console.log(res.data);
+      })      
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   getMovies = (token) => {
     const endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
     axios.get(endpoint, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: {Authorization: `Bearer ${token}`}
     })
       .then(response => {
         this.setState({
@@ -65,37 +90,26 @@ export class MainView extends Component {
 
   }
 
-  componentDidMount = () => {
-    let accessToken = localStorage.getItem('token');
-    if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem('user'),
-        userData: localStorage.getItem('userData')
-      });
-      this.getMovies(accessToken);
-    }
-  }
-
   onLoggedIn = (authData) => {
     this.setState({
-      user: authData.user.Username,
-      userData: authData.user.userData
+      user: authData.user.Username
     });
-
+    console.log(authData.user);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
-    localStorage.setItem('userData', JSON.stringify(authData.user));
+
+  
     this.getMovies(authData.token);
   }
 
   onLogOut = () => {
     this.setState({
       user: null,
-      register: null,
-      userData: null
+      register: null
     });
 
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   render() {
@@ -107,12 +121,14 @@ export class MainView extends Component {
       <div className="main-view">
         <Router>
           <Container>
-          <Button onClick={this.onLogOut}>back</Button>
+            <Link to="/">
+              <Button onClick={this.onLogOut}>back</Button>
+            </Link>
             <Link to={"/profile"}>
               <Button variant="link">Profile</Button>
             </Link>
             <Row>
-              {console.log(this.state.userData)}
+
               <Route exact path="/" render={() => {
                 if (!user) {
                   return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
@@ -150,6 +166,11 @@ export class MainView extends Component {
               <Route exact path="/profile" render={() => {
                 return (
                   <ProfileView user={user} token={localStorage.getItem("token")} />
+                )
+              }} />
+              <Route exact path="/update" render={() => {
+                return (
+                  <UpdateView />
                 )
               }} />
             </Row>

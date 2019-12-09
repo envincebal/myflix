@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 import "./profile-view.scss";
 
@@ -26,16 +26,23 @@ export const ProfileView = (props) => {
 
   const { user, token } = props;
   return (
-    <Jumbotron fluid className="profile-view">
-      <Container>
-        {console.log(localStorage.getItem("userData"))}
-        <h1>Fluid jumbotron</h1>
-        <p>
-          This is a modified jumbotron that occupies the entire horizontal space of
-          its parent.
-      </p>
+
+      <Container className="profile-view">
+        {console.log(localStorage)}
+        <h4>Username</h4>
+        <p>{localStorage.getItem("user")}</p>
+        <h4>Email</h4>
+        <p>{localStorage.getItem("email")}</p>
+        <h4>Birth Date</h4>
+        <p>{localStorage.getItem("birthdate").substr(0, 10)}</p>
+
+        <Button onClick={deleteProfile}>Delete</Button>
+        <Link to={"/update"}>
+<Button >Update</Button>
+        </Link>
+        
       </Container>
-    </Jumbotron>
+
   );
 }
 
