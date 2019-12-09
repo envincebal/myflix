@@ -97,6 +97,9 @@ export class MainView extends Component {
     console.log(authData.user);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
+    localStorage.setItem('password', authData.user.Password);
+    localStorage.setItem('email', authData.user.Email);
+    localStorage.setItem('birthdate', authData.user.BirthDate);
 
   
     this.getMovies(authData.token);
@@ -108,8 +111,7 @@ export class MainView extends Component {
       register: null
     });
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.clear();
   }
 
   render() {

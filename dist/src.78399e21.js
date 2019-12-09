@@ -39681,8 +39681,8 @@ var UpdateView = function UpdateView(props) {
       localStorage.setItem("user", data.Username);
       localStorage.setItem("password", data.Password);
       localStorage.setItem("email", data.Email);
-      localStorage.setItem("birthdate", data.BirthDate);
-      getUser(localStorage.getItem("token"));
+      localStorage.setItem("birthdate", data.BirthDate); // getUser(localStorage.getItem("token"));
+
       console.log(data);
     }).catch(function (e) {
       console.log("error registering the user");
@@ -39879,6 +39879,9 @@ function (_Component) {
       console.log(authData.user);
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
+      localStorage.setItem('password', authData.user.Password);
+      localStorage.setItem('email', authData.user.Email);
+      localStorage.setItem('birthdate', authData.user.BirthDate);
 
       _this.getMovies(authData.token);
     };
@@ -39889,8 +39892,7 @@ function (_Component) {
         register: null
       });
 
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.clear();
     };
 
     _this.state = {

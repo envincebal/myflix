@@ -45,7 +45,7 @@ export const UpdateView = (props) => {
         localStorage.setItem("password", data.Password);
         localStorage.setItem("email", data.Email);
         localStorage.setItem("birthdate", data.BirthDate);
-        getUser(localStorage.getItem("token"));
+        // getUser(localStorage.getItem("token"));
         console.log(data);
       })
       .catch((e) => {
