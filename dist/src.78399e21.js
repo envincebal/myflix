@@ -39254,7 +39254,7 @@ var LoginView = function LoginView(props) {
       }
     }).then(function (response) {
       var data = response.data;
-      console.log(data);
+      console.log();
       props.onLoggedIn(data);
     }).catch(function (e) {
       console.log('no such user');
@@ -39675,7 +39675,7 @@ var UpdateView = function UpdateView(props) {
 
   return _react.default.createElement(_Container.default, {
     className: "registrationForm"
-  }, _react.default.createElement(_Form.default, null, console.log(getUser()), _react.default.createElement(_Form.default.Group, {
+  }, _react.default.createElement(_Form.default, null, _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicUsername"
   }, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
     type: "text",
@@ -39846,12 +39846,12 @@ function (_Component) {
         user: authData.user.Username
       });
 
-      console.log(authData.user);
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
       localStorage.setItem('password', authData.user.Password);
       localStorage.setItem('email', authData.user.Email);
       localStorage.setItem('birthdate', authData.user.BirthDate);
+      console.log(authData);
 
       _this.getMovies(authData.token);
     };
@@ -39892,7 +39892,7 @@ function (_Component) {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         onClick: this.onLogOut
-      }, "back")), _react.default.createElement(_reactRouterDom.Link, {
+      }, "Log Out")), _react.default.createElement(_reactRouterDom.Link, {
         to: "/profile"
       }, _react.default.createElement(_Button.default, {
         variant: "link"
@@ -40079,7 +40079,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56613" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64089" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

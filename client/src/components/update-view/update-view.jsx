@@ -31,6 +31,7 @@ export const UpdateView = (props) => {
         localStorage.setItem("email", data.Email);
         localStorage.setItem("birthdate", data.BirthDate);
         console.log(data);
+
       })
       .catch((e) => {
         console.log("error registering the user");
@@ -40,8 +41,6 @@ export const UpdateView = (props) => {
   return(
     <Container className="registrationForm">
       <Form>
-        {console.log(getUser())}
-
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />

@@ -80,13 +80,13 @@ export class MainView extends Component {
     this.setState({
       user: authData.user.Username
     });
-    console.log(authData.user);
+
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     localStorage.setItem('password', authData.user.Password);
     localStorage.setItem('email', authData.user.Email);
     localStorage.setItem('birthdate', authData.user.BirthDate);
-
+    console.log(authData);
   
     this.getMovies(authData.token);
   }
@@ -110,7 +110,7 @@ export class MainView extends Component {
         <Router>
           <Container>
             <Link to="/">
-              <Button onClick={this.onLogOut}>back</Button>
+              <Button onClick={this.onLogOut}>Log Out</Button>
             </Link>
             <Link to={"/profile"}>
               <Button variant="link">Profile</Button>

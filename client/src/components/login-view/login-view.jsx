@@ -24,7 +24,7 @@ export const LoginView = (props) => {
     })
       .then(response => {
         const data = response.data;
-        console.log(data);
+        console.log();
         props.onLoggedIn(data);
       })
       .catch(e => {
