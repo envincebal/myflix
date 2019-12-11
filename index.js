@@ -131,15 +131,12 @@ app.post('/users',
 // .not().isEmpty() which means "opposite of isEmpty" in plain english "is not
 // empty" or use .isLength({min: 5}) which means minimum value of 5 characters
 // are only allowed
-[
-  check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required')
-    .not()
-    .isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()
-], (req, res) => {
-
+ (req, res) => {
+  req.checkBody('Username', 'Username is required').notEmpty();
+  req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
+  req.checkBody('Password', 'Password is required').notEmpty();
+  req.checkBody('Email', 'Email is required').notEmpty();
+  req.checkBody('Email', 'Email does not appear to be valid').isEmail();
   // check the validation object for errors
   var errors = validationResult(req);
 
@@ -187,7 +184,11 @@ app.post('/users',
 // birth)
 app.put("/users/:Username", passport.authenticate('jwt', {session: false}), (req, res) => {
 
-
+  req.checkBody('Username', 'Username is required').notEmpty();
+  req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
+  req.checkBody('Password', 'Password is required').notEmpty();
+  req.checkBody('Email', 'Email is required').notEmpty();
+  req.checkBody('Email', 'Email does not appear to be valid').isEmail();
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {

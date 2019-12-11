@@ -11,7 +11,7 @@ export const ProfileView = (props) => {
   const deleteProfile = (e) => {
     e.preventDefault();
     const { user } = props;
-    const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + user;
+    const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/Vincent";
 
     axios.delete(userURL)
       .then(response => {

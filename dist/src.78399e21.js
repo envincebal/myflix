@@ -39437,7 +39437,7 @@ var ProfileView = function ProfileView(props) {
   var deleteProfile = function deleteProfile(e) {
     e.preventDefault();
     var user = props.user;
-    var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + user;
+    var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/Vincent";
 
     _axios.default.delete(userURL).then(function (response) {
       var data = response.data;
