@@ -3,18 +3,19 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import "./login-view.scss";
 
-export const LoginView = (props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+export function LoginView (props) {
+  const [ username, setUsername ] = useState("");
+  const [ password, setPassword ] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let loginUrl = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/login";
+    console.log(username, password);
 
     axios.post(loginUrl, null, {
       params: {
@@ -24,13 +25,11 @@ export const LoginView = (props) => {
     })
       .then(response => {
         const data = response.data;
-        console.log();
         props.onLoggedIn(data);
       })
       .catch(e => {
         console.log('no such user')
       })
-
   }
 
   return (

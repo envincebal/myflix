@@ -29,7 +29,7 @@ export class MainView extends Component {
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount ()  {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
       this.setState({
@@ -39,7 +39,7 @@ export class MainView extends Component {
     }
   }
 
-  getMovies = (token) => {
+  getMovies  (token)  {
     const endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
     axios.get(endpoint, {
       headers: {Authorization: `Bearer ${token}`}
@@ -54,7 +54,7 @@ export class MainView extends Component {
       });
   }
 
-  addToFavorites = (movieId) => {
+  addToFavorites  (movieId) {
     const endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
     axios.get(endpoint, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
@@ -76,7 +76,7 @@ export class MainView extends Component {
 
   }
 
-  onLoggedIn = (authData) => {
+  onLoggedIn  (authData)  {
     this.setState({
       user: authData.user.Username
     });
@@ -91,13 +91,13 @@ export class MainView extends Component {
     this.getMovies(authData.token);
   }
 
-  onLogOut = () => {
+  onLogOut  () {
     this.setState({
       user: null,
       register: null
     });
 
-    localStorage.removeItem('token');
+    localStorage.clear();
   }
 
   render() {
@@ -110,7 +110,7 @@ export class MainView extends Component {
         <Router>
           <Container>
             <Link to="/">
-              <Button onClick={this.onLogOut}>Log Out</Button>
+              <Button onClick={() => this.onLogOut()}>Log Out</Button>
             </Link>
             <Link to={"/profile"}>
               <Button variant="link">Profile</Button>

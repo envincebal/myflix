@@ -16,7 +16,8 @@ export const ProfileView = (props) => {
     axios.delete(userURL)
       .then(response => {
         const data = response.data;
-        window.open("/", "_self");
+        // window.open("/", "_self");
+        console.log(data);
         localStorage.clear();
       })
       .catch((e) => {
@@ -28,7 +29,6 @@ export const ProfileView = (props) => {
   return (
 
       <Container className="profile-view">
-        {console.log(localStorage)}
         <h4>Username</h4>
         <p>{localStorage.getItem("user")}</p>
         <h4>Email</h4>

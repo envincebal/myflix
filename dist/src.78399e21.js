@@ -39200,7 +39200,7 @@ module.hot.accept(reloadCSS);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.LoginView = void 0;
+exports.LoginView = LoginView;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -39232,7 +39232,7 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var LoginView = function LoginView(props) {
+function LoginView(props) {
   var _useState = (0, _react.useState)(""),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
@@ -39246,6 +39246,7 @@ var LoginView = function LoginView(props) {
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
     var loginUrl = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/login";
+    console.log(username, password);
 
     _axios.default.post(loginUrl, null, {
       params: {
@@ -39254,7 +39255,6 @@ var LoginView = function LoginView(props) {
       }
     }).then(function (response) {
       var data = response.data;
-      console.log();
       props.onLoggedIn(data);
     }).catch(function (e) {
       console.log('no such user');
@@ -39290,9 +39290,8 @@ var LoginView = function LoginView(props) {
   }, "New user? Sign up for an account ", _react.default.createElement(_reactRouterDom.Link, {
     to: "/register"
   }, "HERE"))));
-};
+}
 
-exports.LoginView = LoginView;
 LoginView.propTypes = {
   onLoggedIn: _propTypes.default.func.isRequired
 };
@@ -39440,8 +39439,9 @@ var ProfileView = function ProfileView(props) {
     var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/Vincent";
 
     _axios.default.delete(userURL).then(function (response) {
-      var data = response.data;
-      window.open("/", "_self");
+      var data = response.data; // window.open("/", "_self");
+
+      console.log(data);
       localStorage.clear();
     }).catch(function (e) {
       console.log("error registering the user");
@@ -39452,7 +39452,7 @@ var ProfileView = function ProfileView(props) {
       token = props.token;
   return _react.default.createElement(_Container.default, {
     className: "profile-view"
-  }, console.log(localStorage), _react.default.createElement("h4", null, "Username"), _react.default.createElement("p", null, localStorage.getItem("user")), _react.default.createElement("h4", null, "Email"), _react.default.createElement("p", null, localStorage.getItem("email")), _react.default.createElement("h4", null, "Birth Date"), _react.default.createElement("p", null, localStorage.getItem("birthdate").substr(0, 10)), _react.default.createElement(_Button.default, {
+  }, _react.default.createElement("h4", null, "Username"), _react.default.createElement("p", null, localStorage.getItem("user")), _react.default.createElement("h4", null, "Email"), _react.default.createElement("p", null, localStorage.getItem("email")), _react.default.createElement("h4", null, "Birth Date"), _react.default.createElement("p", null, localStorage.getItem("birthdate").substr(0, 10)), _react.default.createElement(_Button.default, {
     onClick: deleteProfile
   }, "Delete"), _react.default.createElement(_reactRouterDom.Link, {
     to: "/update"
@@ -39789,82 +39789,6 @@ function (_Component) {
     _classCallCheck(this, MainView);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
-
-    _this.componentDidMount = function () {
-      var accessToken = localStorage.getItem('token');
-
-      if (accessToken !== null) {
-        _this.setState({
-          user: localStorage.getItem('user')
-        });
-
-        _this.getMovies(accessToken);
-      }
-    };
-
-    _this.getMovies = function (token) {
-      var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
-
-      _axios.default.get(endpoint, {
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      }).then(function (response) {
-        _this.setState({
-          movies: response.data
-        });
-      }).catch(function (error) {
-        console.log(error);
-      });
-    };
-
-    _this.addToFavorites = function (movieId) {
-      var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
-
-      _axios.default.get(endpoint, {
-        headers: {
-          Authorization: "Bearer ".concat(localStorage.getItem("token"))
-        }
-      }).then(function (response) {
-        var movies = response.data;
-        movies.forEach(function (movie) {
-          if (movie._id === movieId) {
-            _this.setState(function (prevState) {
-              return {
-                favorites: prevState.favorites.concat(movie)
-              };
-            });
-          }
-        });
-      }).catch(function (error) {
-        console.log(error);
-      });
-    };
-
-    _this.onLoggedIn = function (authData) {
-      _this.setState({
-        user: authData.user.Username
-      });
-
-      localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', authData.user.Username);
-      localStorage.setItem('password', authData.user.Password);
-      localStorage.setItem('email', authData.user.Email);
-      localStorage.setItem('birthdate', authData.user.BirthDate);
-      console.log(authData);
-
-      _this.getMovies(authData.token);
-    };
-
-    _this.onLogOut = function () {
-      _this.setState({
-        user: null,
-        register: null
-      });
-
-      localStorage.removeItem('token');
-    };
-
     _this.state = {
       movies: [],
       favorites: [],
@@ -39875,9 +39799,89 @@ function (_Component) {
   }
 
   _createClass(MainView, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var accessToken = localStorage.getItem('token');
+
+      if (accessToken !== null) {
+        this.setState({
+          user: localStorage.getItem('user')
+        });
+        this.getMovies(accessToken);
+      }
+    }
+  }, {
+    key: "getMovies",
+    value: function getMovies(token) {
+      var _this2 = this;
+
+      var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
+
+      _axios.default.get(endpoint, {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        _this2.setState({
+          movies: response.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "addToFavorites",
+    value: function addToFavorites(movieId) {
+      var _this3 = this;
+
+      var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
+
+      _axios.default.get(endpoint, {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem("token"))
+        }
+      }).then(function (response) {
+        var movies = response.data;
+        movies.forEach(function (movie) {
+          if (movie._id === movieId) {
+            _this3.setState(function (prevState) {
+              return {
+                favorites: prevState.favorites.concat(movie)
+              };
+            });
+          }
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "onLoggedIn",
+    value: function onLoggedIn(authData) {
+      this.setState({
+        user: authData.user.Username
+      });
+      localStorage.setItem('token', authData.token);
+      localStorage.setItem('user', authData.user.Username);
+      localStorage.setItem('password', authData.user.Password);
+      localStorage.setItem('email', authData.user.Email);
+      localStorage.setItem('birthdate', authData.user.BirthDate);
+      console.log(authData);
+      this.getMovies(authData.token);
+    }
+  }, {
+    key: "onLogOut",
+    value: function onLogOut() {
+      this.setState({
+        user: null,
+        register: null
+      });
+      localStorage.clear();
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this4 = this;
 
       var _this$state = this.state,
           movies = _this$state.movies,
@@ -39891,7 +39895,9 @@ function (_Component) {
       }, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_Container.default, null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
-        onClick: this.onLogOut
+        onClick: function onClick() {
+          return _this4.onLogOut();
+        }
       }, "Log Out")), _react.default.createElement(_reactRouterDom.Link, {
         to: "/profile"
       }, _react.default.createElement(_Button.default, {
@@ -39903,7 +39909,7 @@ function (_Component) {
           if (!user) {
             return _react.default.createElement(_loginView.LoginView, {
               onLoggedIn: function onLoggedIn(user) {
-                return _this2.onLoggedIn(user);
+                return _this4.onLoggedIn(user);
               }
             });
           }
@@ -39919,7 +39925,7 @@ function (_Component) {
               value: m._id,
               movie: m,
               addFavorites: function addFavorites(movieId) {
-                return _this2.addToFavorites(movieId);
+                return _this4.addToFavorites(movieId);
               }
             }));
           });
@@ -40079,7 +40085,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64089" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51149" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

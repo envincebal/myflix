@@ -187,7 +187,6 @@ app.post('/users',
 // birth)
 app.put("/users/:Username", passport.authenticate('jwt', {session: false}), (req, res) => {
 
-
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
