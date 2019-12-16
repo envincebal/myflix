@@ -161,7 +161,12 @@ app.post('/users',
           .send(req.body.Username + " already exists");
       } else {
         Users
-          .create({Username: req.body.Username, Password: hashedPassword, Email: req.body.Email, BirthDate: req.body.BirthDate})
+          .create({
+            Username: req.body.Username, 
+            Password: hashedPassword, 
+            Email: req.body.Email, 
+            BirthDate: req.body.BirthDate
+          })
           .then(user => {
             res
               .status(201)
@@ -207,14 +212,15 @@ app.put("/users/:Username", passport.authenticate('jwt', {session: false}), (req
       Email: req.body.Email,
       BirthDate: req.body.BirthDate
     }
-  }, {new: true})
-    .then(updatedUser => res.json(updatedUser))
-    .catch(err => {
+  }, {new: true},
+  function (err, updatedUser) {
+    if (err) {
       console.error(err);
-      res
-        .status(500)
-        .send("Error: " + err);
-    })
+      res.status(500).send("Error:" + err);
+    } else {
+      res.json(updatedUser);
+    }
+  })
 });
 
 // Allow users to add a movie to their list of favorites
