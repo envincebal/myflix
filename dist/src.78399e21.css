@@ -25,9 +25,21 @@
 .label {
   font-weight: 700;
 }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+
 .profile-view {
   margin: 0 auto;
   border-radius: 15px;
+}
+.profile-view .movie-item {
+  font-weight: 700;
+}
+.profile-view .movie-item .delete {
+  font-weight: 400;
+  color: crimson;
+  cursor: pointer;
 }
 .registrationForm {
   max-width: 500px;

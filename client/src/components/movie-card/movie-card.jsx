@@ -1,52 +1,64 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 import "./movie-card.scss";
 
-export class MovieCard extends Component {
-  constructor(props) {
-    super(props);
+export const MovieCard = (props) => {
+    const [favArray, setFav] = useState([]);
 
-    this.state = {
-      clicked: false
+    const {movie} = props;
+
+    const addFavorites = (e) => {
+      e.preventDefault();
+      const url = `https://shielded-anchorage-97078.herokuapp.com/users/`;
+      const user = localStorage.getItem("user");
+      const addMovie = `${url}${user}/Movies/${movie._id}`;
+      axios.post(addMovie, {
+        Username: user
+      }, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(event => {
+          console.log('error adding movie to list');
+        });
+
+      let favArr = localStorage.getItem("favorites");
+      let favorites = favArr ? JSON.parse(favArr): [];
+      if (!favorites.includes(e.target.value)){
+        favorites.push(e.target.value);
+      }
+      console.log(favorites);
+      setFav([...favArray, e.target.value])
+  
+      localStorage.setItem('favorites', JSON.stringify(favorites));
     }
-  }
-
-  addFavorites = () => {
-    console.log(this.props)
-    this.props.addFavorites(this.props.value);
-    this.setState({
-      clicked: true
-    })
-  }
-
-  render() {
-    const { movie } = this.props;
 
     return (
       <Card className="mb-3 mb-sm-4" style={{ width: '16rem' }}>
         <Card.Img variant="top" src={movie.image} />
         <Card.Body>
-
           <Card.Title>{movie.title}</Card.Title>
           <Card.Text>{movie.description}</Card.Text>
           <Link to={"/movies/" + movie._id}>
             <Button variant="link">Open</Button>
           </Link>
-          {!this.state.clicked ? (
-            <Button variant="link" onClick={this.addFavorites}>Add to Favorites</Button>
+          {!localStorage.getItem("favorites").includes(movie.title) ? (
+            <Button variant="link" value={movie.title} onClick={addFavorites}>Add to Favorites</Button>
           ) : (
-              <p className="added">Added to Favorites</p>
+            <p className="added">Added to Favorites</p>
             )
-
           }
         </Card.Body>
       </Card>
     );
-  }
+ 
 }
 
 MovieCard.propTypes = {

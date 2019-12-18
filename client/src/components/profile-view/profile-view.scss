@@ -1,4 +1,18 @@
+h1,h2,h3,h4,h5,h6{
+  font-weight: bold;;
+}
+
 .profile-view{
   margin: 0 auto;
   border-radius: 15px;
+
+  .movie-item{
+    font-weight: 700;
+
+    .delete{
+      font-weight: 400;
+      color: crimson;
+      cursor: pointer;
+    }
+  }
 }

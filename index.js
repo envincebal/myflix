@@ -212,15 +212,14 @@ app.put("/users/:Username", passport.authenticate('jwt', {session: false}), (req
       Email: req.body.Email,
       BirthDate: req.body.BirthDate
     }
-  }, {new: true},
-  function (err, updatedUser) {
-    if (err) {
+  }, {new: true})
+    .then(updatedUser => res.json(updatedUser))
+    .catch(err => {
       console.error(err);
-      res.status(500).send("Error:" + err);
-    } else {
-      res.json(updatedUser);
-    }
-  })
+      res
+        .status(500)
+        .send("Error: " + err);
+    })
 });
 
 // Allow users to add a movie to their list of favorites

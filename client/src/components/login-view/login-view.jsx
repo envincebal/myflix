@@ -14,7 +14,7 @@ export function LoginView (props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let loginUrl = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/login";
+    let loginUrl = "https://shielded-anchorage-97078.herokuapp.com/login";
     console.log(username, password);
 
     axios.post(loginUrl, null, {
@@ -25,6 +25,7 @@ export function LoginView (props) {
     })
       .then(response => {
         const data = response.data;
+
         props.onLoggedIn(data);
       })
       .catch(e => {

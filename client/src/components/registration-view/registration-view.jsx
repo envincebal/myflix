@@ -54,10 +54,6 @@ export const RegistrationView = (props) => {
           <Form.Label>Date of Birth</Form.Label>
           <Form.Control type="date" value={birthdate} onChange={e => setBirthDate(e.target.value)} />
         </Form.Group>
-
-        <Form.Group controlId="formBasicChecbox">
-          <Form.Check type="checkbox" label="Check to see if you're not a robot" />
-        </Form.Group>
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Register
         </Button>

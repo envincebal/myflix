@@ -38244,6 +38244,8 @@ var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _axios = _interopRequireDefault(require("axios"));
+
 require("./movie-card.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -38252,79 +38254,80 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+var MovieCard = function MovieCard(props) {
+  var _useState = (0, _react.useState)([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      favArray = _useState2[0],
+      setFav = _useState2[1];
 
-var MovieCard =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(MovieCard, _Component);
+  var movie = props.movie;
 
-  function MovieCard(props) {
-    var _this;
+  var addFavorites = function addFavorites(e) {
+    e.preventDefault();
+    var url = "https://shielded-anchorage-97078.herokuapp.com/users/";
+    var user = localStorage.getItem("user");
+    var addMovie = "".concat(url).concat(user, "/Movies/").concat(movie._id);
 
-    _classCallCheck(this, MovieCard);
+    _axios.default.post(addMovie, {
+      Username: user
+    }, {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem('token'))
+      }
+    }).then(function (response) {
+      console.log(response);
+    }).catch(function (event) {
+      console.log('error adding movie to list');
+    });
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MovieCard).call(this, props));
+    var favArr = localStorage.getItem("favorites");
+    var favorites = favArr ? JSON.parse(favArr) : [];
 
-    _this.addFavorites = function () {
-      console.log(_this.props);
-
-      _this.props.addFavorites(_this.props.value);
-
-      _this.setState({
-        clicked: true
-      });
-    };
-
-    _this.state = {
-      clicked: false
-    };
-    return _this;
-  }
-
-  _createClass(MovieCard, [{
-    key: "render",
-    value: function render() {
-      var movie = this.props.movie;
-      return _react.default.createElement(_Card.default, {
-        className: "mb-3 mb-sm-4",
-        style: {
-          width: '16rem'
-        }
-      }, _react.default.createElement(_Card.default.Img, {
-        variant: "top",
-        src: movie.image
-      }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, null, movie.title), _react.default.createElement(_Card.default.Text, null, movie.description), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/movies/" + movie._id
-      }, _react.default.createElement(_Button.default, {
-        variant: "link"
-      }, "Open")), !this.state.clicked ? _react.default.createElement(_Button.default, {
-        variant: "link",
-        onClick: this.addFavorites
-      }, "Add to Favorites") : _react.default.createElement("p", {
-        className: "added"
-      }, "Added to Favorites")));
+    if (!favorites.includes(e.target.value)) {
+      favorites.push(e.target.value);
     }
-  }]);
 
-  return MovieCard;
-}(_react.Component);
+    console.log(favorites);
+    setFav([].concat(_toConsumableArray(favArray), [e.target.value]));
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  };
+
+  return _react.default.createElement(_Card.default, {
+    className: "mb-3 mb-sm-4",
+    style: {
+      width: '16rem'
+    }
+  }, _react.default.createElement(_Card.default.Img, {
+    variant: "top",
+    src: movie.image
+  }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, null, movie.title), _react.default.createElement(_Card.default.Text, null, movie.description), _react.default.createElement(_reactRouterDom.Link, {
+    to: "/movies/" + movie._id
+  }, _react.default.createElement(_Button.default, {
+    variant: "link"
+  }, "Open")), !localStorage.getItem("favorites").includes(movie.title) ? _react.default.createElement(_Button.default, {
+    variant: "link",
+    value: movie.title,
+    onClick: addFavorites
+  }, "Add to Favorites") : _react.default.createElement("p", {
+    className: "added"
+  }, "Added to Favorites")));
+};
 
 exports.MovieCard = MovieCard;
 MovieCard.propTypes = {
@@ -38344,7 +38347,7 @@ MovieCard.propTypes = {
     featured: _propTypes.default.bool
   }).isRequired
 };
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-card.scss":"components/movie-card/movie-card.scss"}],"components/movie-view/movie-view.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../node_modules/axios/index.js","./movie-card.scss":"components/movie-card/movie-card.scss"}],"components/movie-view/movie-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -39245,7 +39248,7 @@ function LoginView(props) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    var loginUrl = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/login";
+    var loginUrl = "https://shielded-anchorage-97078.herokuapp.com/login";
     console.log(username, password);
 
     _axios.default.post(loginUrl, null, {
@@ -39432,32 +39435,147 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var ProfileView = function ProfileView(props) {
-  var deleteProfile = function deleteProfile(e) {
-    e.preventDefault();
-    var user = props.user;
-    var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/Vincent";
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-    _axios.default.delete(userURL).then(function (response) {
-      var data = response.data; // window.open("/", "_self");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-      console.log(data);
-      localStorage.clear();
-    }).catch(function (e) {
-      console.log("error registering the user");
-    });
-  };
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  var user = props.user,
-      token = props.token;
-  return _react.default.createElement(_Container.default, {
-    className: "profile-view"
-  }, _react.default.createElement("h4", null, "Username"), _react.default.createElement("p", null, localStorage.getItem("user")), _react.default.createElement("h4", null, "Email"), _react.default.createElement("p", null, localStorage.getItem("email")), _react.default.createElement("h4", null, "Birth Date"), _react.default.createElement("p", null, localStorage.getItem("birthdate").substr(0, 10)), _react.default.createElement(_Button.default, {
-    onClick: deleteProfile
-  }, "Delete"), _react.default.createElement(_reactRouterDom.Link, {
-    to: "/update"
-  }, _react.default.createElement(_Button.default, null, "Update")));
-};
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ProfileView =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ProfileView, _Component);
+
+  function ProfileView(props) {
+    var _this;
+
+    _classCallCheck(this, ProfileView);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ProfileView).call(this, props));
+
+    _this.componentDidMount = function () {
+      var accessToken = localStorage.getItem('token');
+
+      if (accessToken !== null) {
+        _this.getUser(accessToken);
+      }
+    };
+
+    _this.getUser = function (token) {
+      var username = localStorage.getItem('user');
+      var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+
+      _axios.default.get(userURL + username, {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        _this.setState({
+          username: response.data.Username,
+          email: response.data.Email,
+          birthdate: response.data.BirthDate.substr(0, 10),
+          favoriteMovies: response.data.FavoriteMovies
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    };
+
+    _this.deleteProfile = function (e) {
+      e.preventDefault();
+      var user = localStorage.getItem("user");
+      var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + user;
+
+      _axios.default.delete(userURL).then(function (response) {
+        var data = response.data;
+        window.open("/", "_self");
+        console.log(data);
+        localStorage.clear();
+      }).catch(function (e) {
+        console.log("error registering the user");
+      });
+    };
+
+    _this.deleteMovie = function (e, movieId) {
+      e.preventDefault();
+      console.log(movieId);
+      var url = "https://shielded-anchorage-97078.herokuapp.com/users/";
+      var user = localStorage.getItem("user");
+      var deleteMovie = "".concat(url).concat(user, "/Movies/").concat(movieId);
+
+      _axios.default.delete(deleteMovie, {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem('token'))
+        }
+      }).then(function (response) {
+        console.log(response);
+
+        _this.getUser(localStorage.getItem("token"));
+      }).catch(function (event) {
+        console.log(event);
+      });
+
+      var favorites = JSON.parse(localStorage.getItem("favorites"));
+      favorites.splice(favorites.indexOf(movieId), 1);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    };
+
+    _this.state = {
+      favoriteMovies: [],
+      username: null,
+      email: null,
+      birthdate: null
+    };
+    return _this;
+  }
+
+  _createClass(ProfileView, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$state = this.state,
+          favoriteMovies = _this$state.favoriteMovies,
+          username = _this$state.username,
+          email = _this$state.email,
+          birthdate = _this$state.birthdate;
+      return _react.default.createElement(_Container.default, {
+        className: "profile-view"
+      }, _react.default.createElement("h4", null, "Username"), _react.default.createElement("p", null, username), _react.default.createElement("h4", null, "Email"), _react.default.createElement("p", null, email), _react.default.createElement("h4", null, "Birth Date"), _react.default.createElement("p", null, birthdate), _react.default.createElement("h4", null, "Favorite Movies"), _react.default.createElement("ul", null, favoriteMovies && favoriteMovies.map(function (favorite) {
+        var moviesList = JSON.parse(localStorage.getItem("movies"));
+        return _react.default.createElement("li", {
+          key: favorite,
+          className: "movie-item"
+        }, moviesList.find(function (movie) {
+          return movie._id === favorite;
+        }).title, " |", _react.default.createElement("span", {
+          className: "delete",
+          onClick: function onClick(e) {
+            return _this2.deleteMovie(e, favorite);
+          }
+        }, "Delete"));
+      })), _react.default.createElement(_Button.default, {
+        onClick: this.deleteProfile
+      }, "Delete"), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/update"
+      }, _react.default.createElement(_Button.default, null, "Update")));
+    }
+  }]);
+
+  return ProfileView;
+}(_react.Component);
 
 exports.ProfileView = ProfileView;
 },{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","axios":"../node_modules/axios/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
@@ -39578,11 +39696,6 @@ var RegistrationView = function RegistrationView(props) {
     onChange: function onChange(e) {
       return setBirthDate(e.target.value);
     }
-  })), _react.default.createElement(_Form.default.Group, {
-    controlId: "formBasicChecbox"
-  }, _react.default.createElement(_Form.default.Check, {
-    type: "checkbox",
-    label: "Check to see if you're not a robot"
   })), _react.default.createElement(_Button.default, {
     variant: "primary",
     type: "submit",
@@ -39663,10 +39776,7 @@ var UpdateView = function UpdateView(props) {
       }
     }).then(function (response) {
       var data = response.data;
-      localStorage.setItem("user", data.Username);
-      localStorage.setItem("password", data.Password);
-      localStorage.setItem("email", data.Email);
-      localStorage.setItem("birthdate", data.BirthDate);
+      localStorage.setItem("user", username);
       console.log(data);
     }).catch(function (e) {
       console.log("error registering the user");
@@ -39789,11 +39899,32 @@ function (_Component) {
     _classCallCheck(this, MainView);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
+
+    _this.getUser = function (token) {
+      var username = localStorage.getItem('user');
+      var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+
+      _axios.default.get(userURL + username, {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        _this.setState({
+          username: response.data.Username,
+          email: response.data.Email,
+          birthdate: response.data.BirthDate.substr(0, 10),
+          favoriteMovies: response.data.favoriteMovies
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    };
+
     _this.state = {
       movies: [],
-      favorites: [],
+      favoriteMovies: [],
       user: null,
-      register: false
+      userData: null
     };
     return _this;
   }
@@ -39808,6 +39939,7 @@ function (_Component) {
           user: localStorage.getItem('user')
         });
         this.getMovies(accessToken);
+        this.getUser(accessToken);
       }
     }
   }, {
@@ -39825,32 +39957,8 @@ function (_Component) {
         _this2.setState({
           movies: response.data
         });
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-  }, {
-    key: "addToFavorites",
-    value: function addToFavorites(movieId) {
-      var _this3 = this;
 
-      var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
-
-      _axios.default.get(endpoint, {
-        headers: {
-          Authorization: "Bearer ".concat(localStorage.getItem("token"))
-        }
-      }).then(function (response) {
-        var movies = response.data;
-        movies.forEach(function (movie) {
-          if (movie._id === movieId) {
-            _this3.setState(function (prevState) {
-              return {
-                favorites: prevState.favorites.concat(movie)
-              };
-            });
-          }
-        });
+        localStorage.setItem("movies", JSON.stringify(response.data));
       }).catch(function (error) {
         console.log(error);
       });
@@ -39861,32 +39969,35 @@ function (_Component) {
       this.setState({
         user: authData.user.Username
       });
+      var favorites = localStorage.getItem("favorites");
+
+      if (favorites === null) {
+        localStorage.setItem('favorites', []);
+      }
+
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.Username);
-      localStorage.setItem('password', authData.user.Password);
-      localStorage.setItem('email', authData.user.Email);
-      localStorage.setItem('birthdate', authData.user.BirthDate);
-      console.log(authData);
+      console.log(authData.user);
       this.getMovies(authData.token);
     }
   }, {
     key: "onLogOut",
     value: function onLogOut() {
       this.setState({
-        user: null,
-        register: null
+        user: null
       });
-      localStorage.clear();
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("movies");
     }
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       var _this$state = this.state,
           movies = _this$state.movies,
-          user = _this$state.user,
-          favorites = _this$state.favorites;
+          user = _this$state.user;
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
@@ -39896,7 +40007,7 @@ function (_Component) {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         onClick: function onClick() {
-          return _this4.onLogOut();
+          return _this3.onLogOut();
         }
       }, "Log Out")), _react.default.createElement(_reactRouterDom.Link, {
         to: "/profile"
@@ -39909,7 +40020,7 @@ function (_Component) {
           if (!user) {
             return _react.default.createElement(_loginView.LoginView, {
               onLoggedIn: function onLoggedIn(user) {
-                return _this4.onLoggedIn(user);
+                return _this3.onLoggedIn(user);
               }
             });
           }
@@ -39925,7 +40036,7 @@ function (_Component) {
               value: m._id,
               movie: m,
               addFavorites: function addFavorites(movieId) {
-                return _this4.addToFavorites(movieId);
+                return _this3.addToFavorites(movieId);
               }
             }));
           });
@@ -39973,10 +40084,7 @@ function (_Component) {
         exact: true,
         path: "/profile",
         render: function render() {
-          return _react.default.createElement(_profileView.ProfileView, {
-            user: user,
-            token: localStorage.getItem("token")
-          });
+          return _react.default.createElement(_profileView.ProfileView, null);
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -40085,7 +40193,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61803" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51893" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

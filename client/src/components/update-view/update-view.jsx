@@ -23,19 +23,15 @@ export const UpdateView = (props) => {
     }, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
-      .then(response => {
-        const data = response.data;
-       
-        localStorage.setItem("user", data.Username);
-        localStorage.setItem("password", data.Password);
-        localStorage.setItem("email", data.Email);
-        localStorage.setItem("birthdate", data.BirthDate);
-        console.log(data);
+    .then(response => {
+      const data = response.data;
+      localStorage.setItem("user", username);
+      console.log(data);
 
-      })
-      .catch((e) => {
-        console.log("error registering the user");
-      });
+    })
+    .catch((e) => {
+      console.log("error registering the user");
+    });
   }
 
   return(
@@ -58,7 +54,6 @@ export const UpdateView = (props) => {
           <Form.Control type="date" value={birthdate} onChange={e => setBirthDate(e.target.value)} />
         </Form.Group>
         <Button onClick={updateUserInfo}>Update Info</Button>
-
       </Form>
     </Container>
   )
