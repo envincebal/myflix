@@ -1,15 +1,20 @@
 import React from 'react';
 import Container from "react-bootstrap/Container";
+import { connect } from 'react-redux';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import "./genre-view.scss";
 
-export const GenreView = (props) => {
-  const { movie } = props;
+ function GenreView (props){
+  const { movies } = props;
+  if (!movies || !movies.length) return null;
+
+  const movie = movies.find(movie => movie.genre.name); 
   return (
     <Container>
       <Row>
+        {console.log(movies)} 
         <Col md={{ span: 6, offset: 3 }}>
           <div className="genre-view">
             <div className="movie-title">
@@ -27,3 +32,5 @@ export const GenreView = (props) => {
     </Container>
   );
 }
+
+export default connect(({movies}) => ({movies}))(GenreView)

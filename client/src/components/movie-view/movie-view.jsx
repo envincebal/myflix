@@ -4,14 +4,18 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 
 import "./movie-view.scss"
 
-export const MovieView = (props) => {
+ function MovieView (props){
 
-    const { movie, previous } = props;
+  const { movies, movieId } = props;
 
-    if (!movie) return null;
+  if (!movies || !movies.length) return null;
+
+  const movie = movies.find(movie => movie._id === movieId);
+
 
     return (
       <Container>
@@ -47,9 +51,8 @@ export const MovieView = (props) => {
             </div>
           </Col>
         </Row>
-
       </Container>
-
     );
 }
 
+export default connect(({ movies }) => ({ movies }))(MovieView);

@@ -27,7 +27,7 @@ export class ProfileView extends Component {
 
   getUser = (token) => {
     let username = localStorage.getItem('user');
-    const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+    const userURL = "https://shielded-anchorage-97078.herokuapp.com/users/";
     axios.get(userURL + username, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -48,7 +48,7 @@ export class ProfileView extends Component {
   deleteProfile = (e) => {
     e.preventDefault();
     const user = localStorage.getItem("user");
-    const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + user;
+    const userURL = "https://shielded-anchorage-97078.herokuapp.com/users/" + user;
 
     axios.delete(userURL)
       .then(response => {
@@ -64,7 +64,6 @@ export class ProfileView extends Component {
 
   deleteMovie = (e, movieId) => {
     e.preventDefault();
-    console.log(movieId);
     const url = `https://shielded-anchorage-97078.herokuapp.com/users/`;
     const user = localStorage.getItem("user");
     const deleteMovie = `${url}${user}/Movies/${movieId}`;
@@ -73,20 +72,32 @@ export class ProfileView extends Component {
     })
       .then(response => {
         console.log(response);
+
         this.getUser(localStorage.getItem("token"));
       })
       .catch(event => {
         console.log(event);
       });
 
-    let favorites  = JSON.parse(localStorage.getItem("favorites"))
+    let favorites  = JSON.parse(localStorage.getItem("favorites"));
+
     favorites.splice(favorites.indexOf(movieId), 1)
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }
 
   render(){
     const {favoriteMovies, username, email, birthdate} = this.state;
-    
+    let movies = JSON.parse(localStorage.getItem("movies"));
+
+    let filteredFavorites = [];
+    movies.map(m => {
+      favoriteMovies.forEach(favorite => {
+        if (m._id === favorite) {
+          filteredFavorites.push(m);
+        }
+      })
+    });
+
     return (
       <Container className="profile-view">
         <h4>Username</h4>
@@ -97,16 +108,15 @@ export class ProfileView extends Component {
         <p>{birthdate}</p>
         <h4>Favorite Movies</h4>
           <ul>
-            {favoriteMovies && (
-              favoriteMovies.map(favorite => {
-                const moviesList = JSON.parse(localStorage.getItem("movies"));
+            {
+              filteredFavorites.map(favorite => {
                 return (
-                  <li key={favorite} className="movie-item" >{moviesList.find(movie => movie._id === favorite).title} | 
-                  <span className="delete" onClick={(e) => this.deleteMovie(e, favorite)}>Delete</span>
+                  <li key={favorite._id} className="movie-item">{favorite.title} | 
+                  <span className="delete" onClick={(e) => this.deleteMovie(e, favorite._id)}> Delete</span>
                   </li>
                 )
                 })
-              )}
+              }
           </ul>
         <Button onClick={this.deleteProfile}>Delete</Button>
         <Link to={"/update"}>
