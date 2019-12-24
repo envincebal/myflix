@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import { connect } from 'react-redux';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import PropTypes from 'prop-types';
 
 import "./genre-view.scss";
 
@@ -34,3 +35,10 @@ import "./genre-view.scss";
 }
 
 export default connect(({movies}) => ({movies}))(GenreView)
+
+GenreView.propTypes = {
+  genre: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string
+  }).isRequired
+};

@@ -2,6 +2,7 @@ import React from 'react';
 import Container from "react-bootstrap/Container";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import "./director-view.scss";
 
@@ -36,3 +37,10 @@ function DirectorView(props){
 }
 
 export default connect(({movies}) => ({movies}))(DirectorView);
+
+DirectorView.propTypes = {
+  director: PropTypes.shape({
+    name: PropTypes.string,
+    Bio: PropTypes.string
+  }).isRequired
+};
