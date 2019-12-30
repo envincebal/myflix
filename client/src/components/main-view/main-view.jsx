@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {setMovies, setLoggedInUser} from "../../actions/actions";
 import MoviesList from '../movies-list/movies-list';
+
 
 import MovieView from '../movie-view/movie-view';
 import {LoginView} from '../login-view/login-view';
@@ -17,6 +21,8 @@ import {ProfileView} from '../profile-view/profile-view';
 import {RegistrationView} from '../registration-view/registration-view';
 import {UpdateView} from '../update-view/update-view';
 
+import "./main-view.scss";
+
 export class MainView extends Component {
   constructor() {
     super();
@@ -24,7 +30,7 @@ export class MainView extends Component {
     this.state = {
       user: null
     };
-  }
+  } 
 
   componentDidMount ()  {
     let accessToken = localStorage.getItem('token');
@@ -105,65 +111,72 @@ export class MainView extends Component {
     
     return (
       <div className="main-view">
-
-   
-        <Router>
-          <Container>
-            <Link to="/">
-              <Button onClick={() => this.onLogOut()}>Log Out</Button>
+        <Router basename="/client">
+          <Navbar bg="dark" variant="dark">
+            <Link to={"/"}>
+              <Navbar.Brand className="main-title">MyFlix</Navbar.Brand>
             </Link>
-            <Link to={"/profile"}>
-              <Button variant="link">Profile</Button>
-            </Link>
-            
-              <Route
-                exact
-                path="/"
-                render={() => {
-                if (!user) {
-                  return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
-                }
-                return <MoviesList movies={movies} />
-              }}/>
+            <Nav className="mr-auto">
+            </Nav>
+            {user && (
+              <div>
+                <Link to={"/profile"}>
+                  <Button variant="link">Profile</Button>
+                </Link>
+                <Link to="/">
+                  <Button onClick={() => this.onLogOut()}>Log Out</Button>
+                </Link>
+              </div>
+            )}
+          </Navbar> 
+          <Container className="container">
+            <Route
+              exact
+              path="/"
+              render={() => {
+              if (!user) {
+                return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
+              }
+              return <MoviesList movies={movies} />
+            }}/>
 
-              <Route
-                exact
-                path="/register"
-                render={() => {
-                return <RegistrationView/>
-              }}/>
-              <Route
-                exact
-                path="/movies/:movieId"
-                render={({match}) => {
-                return (<MovieView movieId={match.params.movieId}/>)
-              }}/>
-              <Route
-                exact
-                path="/genres/:name"
-                render={({match}) => {
-                return (<GenreView movie={match.params.name}/>)
-              }}/>
-              <Route
-                exact
-                path="/directors/:name"
-                render={({match}) => {
-                return (<DirectorView movie={match.params.name}/>)
-              }}/>
+            <Route
+              exact
+              path="/register"
+              render={() => {
+              return <RegistrationView/>
+            }}/>
+            <Route
+              exact
+              path="/movies/:movieId"
+              render={({match}) => {
+              return (<MovieView movieId={match.params.movieId}/>)
+            }}/>
+            <Route
+              exact
+              path="/genres/:name"
+              render={({match}) => {
+              return (<GenreView movie={match.params.name}/>)
+            }}/>
+            <Route
+              exact
+              path="/directors/:name"
+              render={({match}) => {
+              return (<DirectorView movie={match.params.name}/>)
+            }}/>
 
-              <Route
-                exact
-                path="/profile"
-                render={() => {
-                return (<ProfileView />)
-              }}/>
-              <Route
-                exact
-                path="/update"
-                render={() => {
-                return (<UpdateView/>)
-              }}/>
-            
+            <Route
+              exact
+              path="/profile"
+              render={() => {
+              return (<ProfileView />)
+            }}/>
+            <Route
+              exact
+              path="/update"
+              render={() => {
+              return (<UpdateView/>)
+            }}/>
           </Container>
         </Router>
       </div>

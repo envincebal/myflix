@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from 'axios';
+import Card from 'react-bootstrap/Card';
 import {Link} from "react-router-dom";
 
 import "./profile-view.scss";
@@ -53,7 +54,7 @@ export class ProfileView extends Component {
     axios.delete(userURL)
       .then(response => {
         const data = response.data;
-        window.open("/", "_self");
+        window.open("/client", "_self");
         console.log(data);
         localStorage.clear();
       })
@@ -100,28 +101,43 @@ export class ProfileView extends Component {
 
     return (
       <Container className="profile-view">
-        <h4>Username</h4>
-        <p>{username}</p>
-        <h4>Email</h4>
-        <p>{email}</p>
-        <h4>Birth Date</h4>
-        <p>{birthdate}</p>
-        <h4>Favorite Movies</h4>
+        <Card className="profile-card">
+          <h2 className="profile-title">Profile Info</h2>
+          <h4>Username</h4>
+          <p>{username}</p>
+          <h4>Email</h4>
+          <p>{email}</p>
+          <h4>Birth Date</h4>
+          <p>{birthdate}</p>
+          <h4>Favorite Movies</h4>
           <ul>
             {
               filteredFavorites.map(favorite => {
                 return (
                   <li key={favorite._id} className="movie-item">{favorite.title} | 
-                  <span className="delete" onClick={(e) => this.deleteMovie(e, favorite._id)}> Delete</span>
+                  <span className="delete-movie" onClick={(e) => this.deleteMovie(e, favorite._id)}> Delete</span>
                   </li>
                 )
                 })
               }
           </ul>
-        <Button onClick={this.deleteProfile}>Delete</Button>
-        <Link to={"/update"}>
-          <Button >Update</Button>
-        </Link>
+          <div className="buttons-container">
+            <Link to={"/"}>
+              <Button className="back-button">Back</Button>
+            </Link>
+            <Button 
+              className="delete-button"
+              onClick={this.deleteProfile}>
+                Delete Profile
+            </Button>
+            <Link to={"/update"}>
+              <Button
+                className="update-button">
+                Update Profile
+              </Button>
+            </Link>
+          </div>
+        </Card>
       </Container>
     );
   }

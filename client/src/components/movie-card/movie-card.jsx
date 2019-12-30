@@ -42,7 +42,7 @@ export const MovieCard = (props) => {
   }
 
   return (
-    <Card className="mb-3 mb-sm-4" style={{
+    <Card className="mb-3 mb-sm-4 movie-card" style={{
       width: '16rem'
     }}>
       <Card.Img variant="top" src={movie.image}/>

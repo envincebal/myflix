@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
+import Card from 'react-bootstrap/Card';
+import Button from "react-bootstrap/Button";
 
 import "./genre-view.scss";
 
@@ -15,19 +18,23 @@ import "./genre-view.scss";
   return (
     <Container>
       <Row>
-        {console.log(movies)} 
         <Col md={{ span: 6, offset: 3 }}>
-          <div className="genre-view">
-            <div className="movie-title">
-              <span className="label">Genre: </span>
-              <span className="value">{movie.genre.name}</span>
+          <Card className="genre-card">
+            <div className="genre-view">
+              <h2 className="genre-title">Genre Info</h2>
+              <div className="genre-div">
+                <span className="label">Genre: </span>
+                <span className="value">{movie.genre.name}</span>
+              </div>
+              <div className="genre-description">
+                <span className="label">Description: </span>
+                <span className="value">{movie.genre.description}</span>
+              </div>
             </div>
-            <div className="movie-description">
-              <span className="label">Description: </span>
-              <span className="value">{movie.genre.description}</span>
-            </div>
-
-          </div>
+            <Link to={"/"}>
+              <Button className="back-button">Back</Button>
+            </Link>
+          </Card>
         </Col>
       </Row>
     </Container>
@@ -40,5 +47,5 @@ GenreView.propTypes = {
   genre: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string
-  }).isRequired
+  })
 };

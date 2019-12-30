@@ -4,15 +4,33 @@ h1,h2,h3,h4,h5,h6{
 
 .profile-view{
   margin: 0 auto;
+  max-width: 500px;
   border-radius: 15px;
+  
+  .profile-card{ 
+    padding: 20px;
 
-  .movie-item{
-    font-weight: 700;
+    .profile-title{
+      text-align: center;
+    }
 
-    .delete{
+    .movie-item{
+      font-weight: 700;
+    } 
+    .delete-movie{
       font-weight: 400;
       color: crimson;
       cursor: pointer;
     }
+    .buttons-container{
+      margin: 0 auto;
+
+      .back-button,
+      .delete-button,
+      .update-button{
+        margin: 0 5px;
+      }
+    }
   }
+  
 }

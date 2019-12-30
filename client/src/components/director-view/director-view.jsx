@@ -3,7 +3,11 @@ import Container from "react-bootstrap/Container";
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
+import Card from 'react-bootstrap/Card';
+import Button from "react-bootstrap/Button";
 import { connect } from 'react-redux';
+
 import "./director-view.scss";
 
 function DirectorView(props){
@@ -16,20 +20,26 @@ function DirectorView(props){
     <Container>
       <Row>
         <Col md={{ span: 6, offset: 3 }}>
-          <div className="movie-director">
-            <div className="genre-title">
-              <span className="label">Name: </span>
-              <span className="value">{movie.director.name}</span>
+          <Card className="director-card">
+            <div className="movie-director">
+              <h2 className="director-title">Director Info</h2>
+              <div className="director-name">
+                <span className="label">Name: </span>
+                <span className="value">{movie.director.name}</span>
+              </div>
+              <div className="director-bio">
+                <span className="label">Biography: </span>
+                <span className="value">{movie.director.Bio}</span>
+              </div>
+              <div className="director-dob">
+                <span className="label">BirthDate: </span>
+                <span className="value">{movie.director.birth}</span>
+              </div>
             </div>
-            <div className="movie-description">
-              <span className="label">Biography: </span>
-              <span className="value">{movie.director.Bio}</span>
-            </div>
-            <div className="movie-genre">
-              <span className="label">BirthDate: </span>
-              <span className="value">{movie.director.birth}</span>
-            </div>
-          </div>
+            <Link to={"/"}>
+              <Button>Back</Button>
+            </Link>
+          </Card>
         </Col>
       </Row>
     </Container>
@@ -42,5 +52,5 @@ DirectorView.propTypes = {
   director: PropTypes.shape({
     name: PropTypes.string,
     Bio: PropTypes.string
-  }).isRequired
+  })
 };

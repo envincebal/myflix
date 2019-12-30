@@ -8,6 +8,7 @@ const cors = require("cors");
 const {check, validationResult} = require('express-validator');
 const passport = require('passport');
 require('./passport');
+const path = require("path");
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -26,6 +27,12 @@ mongoose.connect("mongodb+srv://envincebal:.357magnum@myflixdb-luj5p.mongodb.net
 app.use(bodyParser.json());
 
 app.use(express.static("public"));
+
+app.use("/client", express.static(path.join(__dirname, "client", "dist")));
+
+app.get("/client/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 app.use(morgan("common"));
 

@@ -1,4 +1,11 @@
 .login-form{
   max-width: 500px;
   margin: 0px auto;
+
+  .login-card{
+    .login-title{
+      text-align: center;
+    }
+    padding: 20px; 
+  }
 }

@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Card from 'react-bootstrap/Card';
 import axios from 'axios';
+
+import "./update-view.scss";
 
 export const UpdateView = (props) => {
   const [username, setUsername] = useState("");
@@ -27,7 +30,7 @@ export const UpdateView = (props) => {
       const data = response.data;
       localStorage.setItem("user", username);
       console.log(data);
-
+      window.open("/profile", "_self"); 
     })
     .catch((e) => {
       console.log("error registering the user");
@@ -35,26 +38,29 @@ export const UpdateView = (props) => {
   }
 
   return(
-    <Container className="registrationForm">
-      <Form>
-        <Form.Group controlId="formBasicUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
-        </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-        </Form.Group>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
-        </Form.Group>
-        <Form.Group controlId="formBasicDob">
-          <Form.Label>Date of Birth</Form.Label>
-          <Form.Control type="date" value={birthdate} onChange={e => setBirthDate(e.target.value)} />
-        </Form.Group>
-        <Button onClick={updateUserInfo}>Update Info</Button>
-      </Form>
+    <Container className="update-view">
+      <Card className="update-card">
+        <h2 className="update-title">Update Info</h2>
+        <Form>
+          <Form.Group controlId="formBasicUsername">
+            <Form.Label>Username</Form.Label>
+            <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+          </Form.Group>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
+          </Form.Group>
+          <Form.Group controlId="formBasicDob">
+            <Form.Label>Date of Birth</Form.Label>
+            <Form.Control type="date" value={birthdate} onChange={e => setBirthDate(e.target.value)} />
+          </Form.Group>
+          <Button onClick={updateUserInfo}>Update Info</Button>
+        </Form>
+      </Card>
     </Container>
   )
 }
