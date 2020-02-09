@@ -9,6 +9,13 @@ import Card from 'react-bootstrap/Card';
  
 import "./login-view.scss";
 
+  /**
+   * login username and passowrd
+   * @function handleSubmit
+   * @param {event}
+   * @return {object} User information
+   */
+
 export function LoginView (props) {
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");

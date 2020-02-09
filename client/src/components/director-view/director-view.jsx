@@ -10,6 +10,13 @@ import { connect } from 'react-redux';
 
 import "./director-view.scss";
 
+/**
+ * Director info view
+ * @function DirectorView
+ * @param {string} name props
+ * @returns {DirectorView}
+ */
+
 function DirectorView(props){
   const { movies } = props;
   if (!movies || !movies.length) return null;

@@ -10,6 +10,13 @@ import Button from "react-bootstrap/Button";
 
 import "./genre-view.scss";
 
+/**
+ * Genre info
+ * @function GenreView
+ * @param {string} props for genre
+ * @returns {Container} - other info about the genre
+ */
+
  function GenreView (props){
   const { movies } = props;
   if (!movies || !movies.length) return null;
