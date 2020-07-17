@@ -1,22 +1,21 @@
-import React, {Component} from 'react';
-import axios from 'axios';
+import React, {Component} from "react";
+import axios from "axios";
 
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import {Link} from "react-router-dom";
-import {connect} from "react-redux";
-import {setMovies, setLoggedInUser} from "../../actions/actions";
-import MoviesList from '../movies-list/movies-list';
 
-
-import MovieView from '../movie-view/movie-view';
+import {MovieCard} from "../movie-card/movie-card";
+import {MovieView} from '../movie-view/movie-view';
 import {LoginView} from '../login-view/login-view';
-import GenreView from '../genre-view/genre-view';
-import DirectorView from '../director-view/director-view';
+import {GenreView} from '../genre-view/genre-view';
+import {DirectorView} from '../director-view/director-view';
 import {ProfileView} from '../profile-view/profile-view';
 import {RegistrationView} from '../registration-view/registration-view';
 import {UpdateView} from '../update-view/update-view';
@@ -28,37 +27,32 @@ export class MainView extends Component {
     super();
 
     this.state = {
-      user: null
-    };
-  } 
+      movies: [],
+      favoriteMovies: [],
+      user: null,
+      userData: null
 
-  componentDidMount ()  {
-    let accessToken = localStorage.getItem('token');
+    };
+  }
+
+  componentDidMount() {
+    let accessToken = localStorage.getItem("token");
     if (accessToken !== null) {
       this.setState({
-        user: localStorage.getItem('user')
+        user: localStorage.getItem("user")
       });
       this.getMovies(accessToken);
       this.getUser(accessToken);
     }
   }
 
-    /**
-   * 
-   * @function getUser
-   * @param {string} user 
-   * @param {string} token 
-   * @returns {object} user info
-   */
-
-  getUser (token)  {
-    let username = localStorage.getItem('user');
+  getUser = (token) => {
+    let username = localStorage.getItem("user");
     const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
     axios.get(userURL + username, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        this.props.setLoggedInUser(response.data);
         this.setState({
           username: response.data.Username,
           email: response.data.Email,
@@ -71,24 +65,16 @@ export class MainView extends Component {
       });
   }
 
-    /**
-   *  movie list is retrieved upon successful login
-   * @async
-   * @function getMovies
-   * @param {number} token 
-   * @returns {array} movies
-   */
-
-  getMovies (token)  {
-    const endpoint = "https://shielded-anchorage-97078.herokuapp.com/movies";
-    axios.get(endpoint, {
+  getMovies(token) {
+    const endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
+    axios
+      .get(endpoint, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
       .then(response => {
-        this.props.setMovies(response.data);
-
+        this.setState({movies: response.data});
         localStorage.setItem("movies", JSON.stringify(response.data));
       })
       .catch(error => {
@@ -96,51 +82,38 @@ export class MainView extends Component {
       });
   }
 
-  
-  /**
-   *  login-view if user is authenticated
-   * @function onLoggedIn
-   * @param {object} authData - from login-view
-   * @returns {state} 
-   * @returns {localStorage}
-   */
-  onLoggedIn (authData)  {
+  onLoggedIn(authData) {
     this.setState({user: authData.user.Username});
 
     const favorites = localStorage.getItem("favorites");
 
     if(favorites === null){
-      localStorage.setItem('favorites', []);
+      localStorage.setItem("favorites", []);
     }
-    this.props.setLoggedInUser(authData.user);
-    localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user.Username);
+    
+    localStorage.setItem("token", authData.token);
+    localStorage.setItem("user", authData.user.Username);
+    console.log(authData.user);
 
     this.getMovies(authData.token);
   }
 
-    /**
-   * 
-   * @function onLogOut
-   * @returns {localStorage}
-   */
-  onLogOut ()  {
+  onLogOut() {
     this.setState({user: null});
 
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   }
 
-  render() {
-    const {user} = this.state;
-    const {movies} = this.props;
+  render() { 
+    const {movies, user} = this.state;
 
     if (!movies) 
       return <div className="main-view"/>;
-    
+
     return (
       <div className="main-view">
-        <Router basename="/client">
+        <Router>
           <Navbar bg="dark" variant="dark">
             <Link to={"/"}>
               <Navbar.Brand className="main-title">MyFlix</Navbar.Brand>
@@ -159,63 +132,68 @@ export class MainView extends Component {
             )}
           </Navbar> 
           <Container className="container">
-            <Route
-              exact
-              path="/"
-              render={() => {
-              if (!user) {
-                return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
-              }
-              return <MoviesList movies={movies} />
-            }}/>
+            <Row>
+              <Route
+                exact
+                path="/"
+                render={() => {
+                if (!user) {
+                  return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
+                }
+                return movies.map(m => {
+                  return (
+                    <Col key={m._id} xs={12} sm={6} md={4}>
+                      <MovieCard
+                        key={m._id}
+                        value={m._id}
+                        movie={m}
+                        addFavorites={movieId => this.addToFavorites(movieId)}/>
+                    </Col>
+                  );
+                })
+              }}/>
 
-            <Route
-              exact
-              path="/register"
-              render={() => {
-              return <RegistrationView/>
-            }}/>
-            <Route
-              exact
-              path="/movies/:movieId"
-              render={({match}) => {
-              return (<MovieView movieId={match.params.movieId}/>)
-            }}/>
-            <Route
-              exact
-              path="/genres/:name"
-              render={({match}) => {
-              return (<GenreView movie={match.params.name}/>)
-            }}/>
-            <Route
-              exact
-              path="/directors/:name"
-              render={({match}) => {
-              return (<DirectorView movie={match.params.name}/>)
-            }}/>
+              <Route
+                exact
+                path="/register"
+                render={() => {
+                return <RegistrationView/>
+              }}/>
+              <Route
+                exact
+                path="/movies/:movieId"
+                render={({match}) => {
+                return (<MovieView movie={movies.find(m => m._id === match.params.movieId)}/>)
+              }}/>
+              <Route
+                exact
+                path="/genres/:name"
+                render={({match}) => {
+                return (<GenreView movie={movies.find(m => m.genre.name === match.params.name)}/>)
+              }}/>
+              <Route
+                exact
+                path="/directors/:name"
+                render={({match}) => {
+                return (<DirectorView movie={movies.find(m => m.director.name === match.params.name)}/>)
+              }}/>
 
-            <Route
-              exact
-              path="/profile"
-              render={() => {
-              return (<ProfileView />)
-            }}/>
-            <Route
-              exact
-              path="/update"
-              render={() => {
-              return (<UpdateView/>)
-            }}/>
+              <Route
+                exact
+                path="/profile"
+                render={() => {
+                return (<ProfileView />)
+              }}/>
+              <Route
+                exact
+                path="/update"
+                render={() => {
+                return (<UpdateView/>)
+              }}/>
+            </Row>
           </Container>
         </Router>
       </div>
     );
   }
 }
-  let mapStateToProps = state => {
-    return {
-      movies: state.movies
-    }
-  }
-
-  export default connect(mapStateToProps, {setMovies,setLoggedInUser})(MainView);

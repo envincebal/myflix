@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from 'axios';
-import Card from 'react-bootstrap/Card';
+import Card from 'react-bootstrap/Card'; 
 import {Link} from "react-router-dom";
 
 import "./profile-view.scss";
@@ -26,14 +26,9 @@ export class ProfileView extends Component {
     }
   }
 
-   /**
-     * gets user info for display.
-     * @param {number} token 
-     * @return {object} user info
-     */
   getUser = (token) => {
     let username = localStorage.getItem('user');
-    const userURL = "https://shielded-anchorage-97078.herokuapp.com/users/";
+    const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
     axios.get(userURL + username, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -51,20 +46,15 @@ export class ProfileView extends Component {
       });
   }
   
-  /**
-   * deletes user from database
-   * @param {event} deleteAccount
-   * @return {alert} removed account
-   */
   deleteProfile = (e) => {
     e.preventDefault();
     const user = localStorage.getItem("user");
-    const userURL = "https://shielded-anchorage-97078.herokuapp.com/users/" + user;
+    const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + user;
 
     axios.delete(userURL)
       .then(response => {
         const data = response.data;
-        window.open("/client", "_self");
+        window.open("/", "_self");
         console.log(data);
         localStorage.clear();
       })
@@ -73,15 +63,9 @@ export class ProfileView extends Component {
       });
   }
 
-   /**
-       * removes favorite movie from localStorage
-       * @param {EventTarget} movieId
-       * @param {number} movieId
-       * @return {alert} removed id from favorite list
-       */
-
   deleteMovie = (e, movieId) => {
     e.preventDefault();
+    console.log(movieId);
     const url = `https://shielded-anchorage-97078.herokuapp.com/users/`;
     const user = localStorage.getItem("user");
     const deleteMovie = `${url}${user}/Movies/${movieId}`;
@@ -90,21 +74,21 @@ export class ProfileView extends Component {
     })
       .then(response => {
         console.log(response);
-
         this.getUser(localStorage.getItem("token"));
       })
       .catch(event => {
         console.log(event);
       });
 
-    let favorites  = JSON.parse(localStorage.getItem("favorites"));
+      let favorites  = JSON.parse(localStorage.getItem("favorites"));
 
-    favorites.splice(favorites.indexOf(movieId), 1)
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+      favorites.splice(favorites.indexOf(movieId), 1)
+      localStorage.setItem("favorites", JSON.stringify(favorites));
   }
 
   render(){
     const {favoriteMovies, username, email, birthdate} = this.state;
+
     let movies = JSON.parse(localStorage.getItem("movies"));
 
     let filteredFavorites = [];
@@ -115,7 +99,7 @@ export class ProfileView extends Component {
         }
       })
     });
-
+    
     return (
       <Container className="profile-view">
         <Card className="profile-card">

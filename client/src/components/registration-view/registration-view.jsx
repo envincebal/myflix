@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import Card from 'react-bootstrap/Card';
 
 import "./registration-view.scss";
 
@@ -26,7 +25,7 @@ export const RegistrationView = (props) => {
     })
       .then(response => {
         const data = response.data;
-        window.open("/client", "_self"); 
+        window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
       })
       .catch((e) => {
         console.log("error registering the user");
@@ -35,37 +34,33 @@ export const RegistrationView = (props) => {
 
   return (
     <Container className="registrationForm">
-      <Card className="registration-card">
-        <h2 className="registration-title">Register</h2>
-        <Form>
-          <Form.Group controlId="formBasicUsername">
-            <Form.Label>Username</Form.Label>
-            <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
-            <Form.Text className="emailShare">
-              We"ll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
-          <Form.Group controlId="formBasicDob">
-            <Form.Label>Date of Birth</Form.Label>
-            <Form.Control type="date" value={birthdate} onChange={e => setBirthDate(e.target.value)} />
-          </Form.Group>
-          <Button variant="primary" type="submit" onClick={handleSubmit}>
-            Register
-          </Button>
-          <Form.Text className="text-muted">
-            Already have an account? Log in <Link to={"/"}>HERE</Link>
+      <Form>
+        <Form.Group controlId="formBasicUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+        </Form.Group>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
+          <Form.Text className="emailShare">
+            We"ll never share your email with anyone else.
           </Form.Text>
-        </Form>
-      </Card>
-
+        </Form.Group>
+        <Form.Group controlId="formBasicDob">
+          <Form.Label>Date of Birth</Form.Label>
+          <Form.Control type="date" value={birthdate} onChange={e => setBirthDate(e.target.value)} />
+        </Form.Group>
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
+          Register
+        </Button>
+        <Form.Text className="text-muted">
+          Already have an account? Log in <Link to={"/"}>HERE</Link>
+        </Form.Text>
+      </Form>
     </Container>
   )
 }
