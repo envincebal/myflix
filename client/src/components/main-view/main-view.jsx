@@ -131,66 +131,68 @@ export class MainView extends Component {
               </div>
             )}
           </Navbar> 
-          <Container className="container">
-            <Row>
-              <Route
-                exact
-                path="/"
-                render={() => {
-                if (!user) {
-                  return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
-                }
-                return movies.map(m => {
-                  return (
-                    <Col key={m._id} xs={12} sm={6} md={4}>
-                      <MovieCard
-                        key={m._id}
-                        value={m._id}
-                        movie={m}
-                        addFavorites={movieId => this.addToFavorites(movieId)}/>
-                    </Col>
-                  );
-                })
-              }}/>
+          <Container>
+            <div className="main-container">
+              <Row>
+                <Route
+                  exact
+                  path="/"
+                  render={() => {
+                  if (!user) {
+                    return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
+                  }
+                  return movies.map(m => {
+                    return (
+                      <Col key={m._id} xs={12} sm={6} md={4}>
+                        <MovieCard
+                          key={m._id}
+                          value={m._id}
+                          movie={m}
+                          addFavorites={movieId => this.addToFavorites(movieId)}/>
+                      </Col>
+                    );
+                  })
+                }}/>
 
-              <Route
-                exact
-                path="/register"
-                render={() => {
-                return <RegistrationView/>
-              }}/>
-              <Route
-                exact
-                path="/movies/:movieId"
-                render={({match}) => {
-                return (<MovieView movie={movies.find(m => m._id === match.params.movieId)}/>)
-              }}/>
-              <Route
-                exact
-                path="/genres/:name"
-                render={({match}) => {
-                return (<GenreView movie={movies.find(m => m.genre.name === match.params.name)}/>)
-              }}/>
-              <Route
-                exact
-                path="/directors/:name"
-                render={({match}) => {
-                return (<DirectorView movie={movies.find(m => m.director.name === match.params.name)}/>)
-              }}/>
+                <Route
+                  exact
+                  path="/register"
+                  render={() => {
+                  return <RegistrationView/>
+                }}/>
+                <Route
+                  exact
+                  path="/movies/:movieId"
+                  render={({match}) => {
+                  return (<MovieView movie={movies.find(m => m._id === match.params.movieId)}/>)
+                }}/>
+                <Route
+                  exact
+                  path="/genres/:name"
+                  render={({match}) => {
+                  return (<GenreView movie={movies.find(m => m.genre.name === match.params.name)}/>)
+                }}/>
+                <Route
+                  exact
+                  path="/directors/:name"
+                  render={({match}) => {
+                  return (<DirectorView movie={movies.find(m => m.director.name === match.params.name)}/>)
+                }}/>
 
-              <Route
-                exact
-                path="/profile"
-                render={() => {
-                return (<ProfileView />)
-              }}/>
-              <Route
-                exact
-                path="/update"
-                render={() => {
-                return (<UpdateView/>)
-              }}/>
-            </Row>
+                <Route
+                  exact
+                  path="/profile"
+                  render={() => {
+                  return (<ProfileView />)
+                }}/>
+                <Route
+                  exact
+                  path="/update"
+                  render={() => {
+                  return (<UpdateView/>)
+                }}/>
+              </Row>
+            </div>
           </Container>
         </Router>
       </div>

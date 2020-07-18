@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import axios from 'axios';
 import Card from 'react-bootstrap/Card'; 
 import {Link} from "react-router-dom";
@@ -101,13 +100,13 @@ export class ProfileView extends Component {
     });
     
     return (
-      <Container className="profile-view">
+      <div className="profile-view">
         <Card className="profile-card">
           <h2 className="profile-title">Profile Info</h2>
-          <h4>Username</h4>
+          <h4>Username</h4> 
           <p>{username}</p>
           <h4>Email</h4>
-          <p>{email}</p>
+          <p>{email}</p> 
           <h4>Birth Date</h4>
           <p>{birthdate}</p>
           <h4>Favorite Movies</h4>
@@ -119,7 +118,7 @@ export class ProfileView extends Component {
                   <span className="delete-movie" onClick={(e) => this.deleteMovie(e, favorite._id)}> Delete</span>
                   </li>
                 )
-                })
+                }) 
               }
           </ul>
           <div className="buttons-container">
@@ -139,7 +138,7 @@ export class ProfileView extends Component {
             </Link>
           </div>
         </Card>
-      </Container>
+      </div>
     );
   }
 

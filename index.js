@@ -23,6 +23,7 @@ var auth = require('./auth')(app);
 mongoose.connect("mongodb+srv://envincebal:.357magnum@myflixdb-luj5p.mongodb.net/myFlixDB?retryWri" +
     "tes=true&w=majority", {useNewUrlParser: true});
 
+
 app.use(bodyParser.json());
 
 app.use(express.static("public"));

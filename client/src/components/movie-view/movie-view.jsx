@@ -15,7 +15,7 @@ export const MovieView = (props) => {
     if (!movie) return null;
 
     return (
-  
+      <Container>
         <Col md={{ span: 6, offset: 3 }}>
           <Card className="movie-view-card">
             <div className="movie-view">
@@ -51,8 +51,8 @@ export const MovieView = (props) => {
               </div>
             </div>
           </Card>
-        </Col>
-
+        </Col> 
+      </ Container>
     );
 }
 

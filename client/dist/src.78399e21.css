@@ -31,10 +31,31 @@
   max-width: 500px;
   margin: 0px auto;
 }
+.genre-card {
+  padding: 20px;
+  max-width: 500px;
+}
+.genre-card .genre-view {
+  margin: 0 0 10px 0;
+}
+.genre-card .genre-view .genre-title {
+  text-align: center;
+}
+
 .label {
   font-weight: 700;
 }
-.label {
+.director-card {
+  padding: 20px;
+  max-width: 500px;
+}
+.director-card .movie-director {
+  margin: 0 0 10px 0;
+}
+.director-card .movie-director .director-title {
+  text-align: center;
+}
+.director-card .movie-director .label {
   font-weight: 700;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -44,21 +65,34 @@ h1, h2, h3, h4, h5, h6 {
 .profile-view {
   margin: 0 auto;
   border-radius: 15px;
+  max-width: 500px;
 }
-.profile-view .movie-item {
+.profile-view .profile-card {
+  padding: 20px;
+}
+.profile-view .profile-card .profile-title {
+  text-align: center;
+}
+.profile-view .profile-card .movie-item {
   font-weight: 700;
 }
-.profile-view .movie-item .delete {
+.profile-view .profile-card .movie-item .delete-movie {
   font-weight: 400;
-  color: crimson;
+  color: #dd1b1b;
   cursor: pointer;
+}
+.profile-view .profile-card .buttons-container {
+  text-align: center;
+}
+.profile-view .profile-card .buttons-container button {
+  margin: 0 10px;
 }
 .registrationForm {
   max-width: 500px;
   margin: 0px auto;
 }
-.container {
-  margin: 30px auto;
+.main-container {
+  margin: 30px 0;
 }
 
 .main-title {
