@@ -39611,11 +39611,18 @@ function (_Component) {
       });
     };
 
+    _this.onChangeHandler = function (e) {
+      _this.setState({
+        input: e.target.value
+      });
+    };
+
     _this.state = {
       movies: [],
       favoriteMovies: [],
       user: null,
-      userData: null
+      userData: null,
+      input: ""
     };
     return _this;
   }
@@ -39687,7 +39694,8 @@ function (_Component) {
 
       var _this$state = this.state,
           movies = _this$state.movies,
-          user = _this$state.user;
+          user = _this$state.user,
+          input = _this$state.input;
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
@@ -39714,7 +39722,7 @@ function (_Component) {
         }
       }, "Log Out")))), _react.default.createElement(_Container.default, null, _react.default.createElement("div", {
         className: "main-container"
-      }, _react.default.createElement(_Row.default, null, _react.default.createElement(_reactRouterDom.Route, {
+      }, _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render() {
@@ -39726,7 +39734,17 @@ function (_Component) {
             });
           }
 
-          return movies.map(function (m) {
+          return _react.default.createElement("div", {
+            className: "movies-list"
+          }, _react.default.createElement("input", {
+            value: input,
+            type: "text",
+            placeholder: "Filter movies",
+            className: "filter-form form-control",
+            onChange: _this3.onChangeHandler
+          }), _react.default.createElement(_Row.default, null, movies.filter(function (movie) {
+            return input === "" || movie.title.toLowerCase().includes(input);
+          }).map(function (m) {
             return _react.default.createElement(_Col.default, {
               key: m._id,
               xs: 12,
@@ -39740,7 +39758,7 @@ function (_Component) {
                 return _this3.addToFavorites(movieId);
               }
             }));
-          });
+          })));
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -39793,7 +39811,7 @@ function (_Component) {
         render: function render() {
           return _react.default.createElement(_updateView.UpdateView, null);
         }
-      }))))));
+      })))));
     }
   }]);
 
@@ -39894,7 +39912,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50126" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49487" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

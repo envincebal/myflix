@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useState } from "react";
 import axios from "axios";
 
 import Container from "react-bootstrap/Container";
@@ -23,6 +23,7 @@ import {UpdateView} from '../update-view/update-view';
 import "./main-view.scss";
 
 export class MainView extends Component {
+  
   constructor() {
     super();
 
@@ -30,8 +31,8 @@ export class MainView extends Component {
       movies: [],
       favoriteMovies: [],
       user: null,
-      userData: null
-
+      userData: null,
+      input: ""
     };
   }
 
@@ -105,8 +106,14 @@ export class MainView extends Component {
     localStorage.removeItem("token");
   }
 
+  onChangeHandler = (e) => {
+    this.setState({
+      input: e.target.value,
+    })
+  }
+
   render() { 
-    const {movies, user} = this.state;
+    const {movies, user, input} = this.state;
 
     if (!movies) 
       return <div className="main-view"/>;
@@ -132,66 +139,81 @@ export class MainView extends Component {
             )}
           </Navbar> 
           <Container>
-            <div className="main-container">
-              <Row>
-                <Route
-                  exact
-                  path="/"
-                  render={() => {
-                  if (!user) {
-                    return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
-                  }
-                  return movies.map(m => {
+            <div className="main-container">  
+              <Route
+                exact
+                path="/"
+                render={() => {
+                if (!user) {
+                  return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>
+                }
+                return (
+                  <div className="movies-list">
+                    <input 
+                      value={input} 
+                      type="text"
+                      placeholder="Filter movies" 
+                      className="filter-form form-control"
+                      onChange={this.onChangeHandler} 
+                    />
+                    <Row>
+                    {
+                    movies.filter(movie => input === "" || movie.title.toLowerCase().includes(input))
+                    .map(m => { 
+              
                     return (
                       <Col key={m._id} xs={12} sm={6} md={4}>
                         <MovieCard
                           key={m._id}
                           value={m._id}
                           movie={m}
-                          addFavorites={movieId => this.addToFavorites(movieId)}/>
+                          addFavorites={movieId => this.addToFavorites(movieId)}
+                        />
                       </Col>
                     );
-                  })
-                }}/>
+                    })}
+                    </Row>
+                  </div>
+                )
+              }}/>
 
-                <Route
-                  exact
-                  path="/register"
-                  render={() => {
-                  return <RegistrationView/>
-                }}/>
-                <Route
-                  exact
-                  path="/movies/:movieId"
-                  render={({match}) => {
-                  return (<MovieView movie={movies.find(m => m._id === match.params.movieId)}/>)
-                }}/>
-                <Route
-                  exact
-                  path="/genres/:name"
-                  render={({match}) => {
-                  return (<GenreView movie={movies.find(m => m.genre.name === match.params.name)}/>)
-                }}/>
-                <Route
-                  exact
-                  path="/directors/:name"
-                  render={({match}) => {
-                  return (<DirectorView movie={movies.find(m => m.director.name === match.params.name)}/>)
-                }}/>
+              <Route
+                exact
+                path="/register"
+                render={() => {
+                return <RegistrationView/>
+              }}/>
+              <Route
+                exact
+                path="/movies/:movieId"
+                render={({match}) => {
+                return (<MovieView movie={movies.find(m => m._id === match.params.movieId)}/>)
+              }}/>
+              <Route
+                exact
+                path="/genres/:name"
+                render={({match}) => {
+                return (<GenreView movie={movies.find(m => m.genre.name === match.params.name)}/>)
+              }}/>
+              <Route
+                exact
+                path="/directors/:name"
+                render={({match}) => {
+                return (<DirectorView movie={movies.find(m => m.director.name === match.params.name)}/>)
+              }}/>
 
-                <Route
-                  exact
-                  path="/profile"
-                  render={() => {
-                  return (<ProfileView />)
-                }}/>
-                <Route
-                  exact
-                  path="/update"
-                  render={() => {
-                  return (<UpdateView/>)
-                }}/>
-              </Row>
+              <Route
+                exact
+                path="/profile"
+                render={() => {
+                return (<ProfileView />)
+              }}/>
+              <Route
+                exact
+                path="/update"
+                render={() => {
+                return (<UpdateView/>)
+              }}/>
             </div>
           </Container>
         </Router>
