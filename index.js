@@ -197,14 +197,7 @@ app.post("/users",
 
 // Allow users to update their user info (username, password, email, date of
 // birth)
-app.put("/users/:Username",[
-  check("Username", "Username is required").isLength({min: 5}),
-  check("Username", "Username contains non alphanumeric characters - not allowed.").isAlphanumeric(),
-  check("Password", "Password is required")
-    .not()
-    .isEmpty(),
-  check("Email", "Email does not appear to be valid").isEmail()
-], passport.authenticate("jwt", {session: false}), (req, res) => {
+app.put("/users/:Username", passport.authenticate("jwt", {session: false}), (req, res) => {
 
   const errors = validationResult(req);
 
@@ -226,10 +219,7 @@ app.put("/users/:Username",[
       Email: req.body.Email,
       BirthDate: req.body.BirthDate
     }
-  }, {upsert: true,
-    new: true,
-    runValidators: true,
-    setDefaultsOnInsert: true})
+  }, {new: true})
     .then(updatedUser => res.json(updatedUser))
     .catch(err => {
       console.error(err);
