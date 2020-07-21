@@ -14,7 +14,7 @@ export const MovieCard = (props) => {
 
     const addFavorites = (e) => {
       e.preventDefault();
-      const url = `https://glacial-reef-99831.herokuapp.com/users/`;
+      const url = `https://protected-chamber-62597.herokuapp.com/users/`;
       const user = localStorage.getItem("user");
       const addMovie = `${url}${user}/Movies/${movie._id}`;
 

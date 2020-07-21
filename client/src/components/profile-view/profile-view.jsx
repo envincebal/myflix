@@ -27,7 +27,7 @@ export class ProfileView extends Component {
 
   getUser = (token) => {
     let username = localStorage.getItem('user');
-    const userURL = "https://glacial-reef-99831.herokuapp.com/users/";
+    const userURL = "https://protected-chamber-62597.herokuapp.com/users/";
     axios.get(userURL + username, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -48,7 +48,7 @@ export class ProfileView extends Component {
   deleteProfile = (e) => {
     e.preventDefault();
     const user = localStorage.getItem("user");
-    const userURL = "https://glacial-reef-99831.herokuapp.com/users/" + user;
+    const userURL = "https://protected-chamber-62597.herokuapp.com/users/" + user;
 
     axios.delete(userURL)
       .then(response => {
@@ -65,7 +65,7 @@ export class ProfileView extends Component {
   deleteMovie = (e, movieId) => {
     e.preventDefault();
     console.log(movieId);
-    const url = `https://glacial-reef-99831.herokuapp.com/users/`;
+    const url = `https://protected-chamber-62597.herokuapp.com/users/`;
     const user = localStorage.getItem("user");
     const deleteMovie = `${url}${user}/Movies/${movieId}`;
     axios.delete(deleteMovie, {
