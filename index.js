@@ -21,8 +21,7 @@ var auth = require("./auth")(app);
 
 // mongoose.connect("mongodb://localhost:27017/myFlixDB", {useNewUrlParser:
 // true});
-mongoose.connect("mongodb+srv://envincebal:.357magnum@myflixdb-luj5p.mongodb.net/myFlixDB?retryWri" +
-    "tes=true&w=majority", {useNewUrlParser: true});
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(bodyParser.json());
 
@@ -173,7 +172,7 @@ app.post("/users",
             Email: req.body.Email, 
             BirthDate: req.body.BirthDate
           })
-          .then(user => {
+          .then(user => { 
             res
               .status(201)
               .json(user)
