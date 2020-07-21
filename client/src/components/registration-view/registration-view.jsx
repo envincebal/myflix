@@ -16,7 +16,7 @@ export const RegistrationView = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const loginUrl = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users";
+    const loginUrl = "https://glacial-reef-99831.herokuapp.com/users";
     axios.post(loginUrl, {
       Username: username,
       Password: password,

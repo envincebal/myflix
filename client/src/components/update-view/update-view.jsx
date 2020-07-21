@@ -13,7 +13,7 @@ export const UpdateView = (props) => {
   const updateUserInfo = (e) => {
     e.preventDefault();
 
-    const userURL = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users/";
+    const userURL = "https://glacial-reef-99831.herokuapp.com/users/";
 
     axios.put(userURL + localStorage.getItem('user'), {
       Username: username,
