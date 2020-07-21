@@ -39331,7 +39331,7 @@ var RegistrationView = function RegistrationView(props) {
       BirthDate: birthdate
     }).then(function (response) {
       var data = response.data;
-      window.open("/clien", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+      window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
     }).catch(function (e) {
       console.log("error registering the user");
     });
@@ -39700,7 +39700,9 @@ function (_Component) {
       });
       return _react.default.createElement("div", {
         className: "main-view"
-      }, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_Navbar.default, {
+      }, _react.default.createElement(_reactRouterDom.BrowserRouter, {
+        basename: "/client"
+      }, _react.default.createElement(_Navbar.default, {
         bg: "dark",
         variant: "dark"
       }, _react.default.createElement(_reactRouterDom.Link, {
@@ -39911,7 +39913,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62092" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50966" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
