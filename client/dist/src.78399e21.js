@@ -39675,7 +39675,6 @@ function (_Component) {
 
       localStorage.setItem("token", authData.token);
       localStorage.setItem("user", authData.user.Username);
-      console.log(authData.user);
       this.getMovies(authData.token);
     }
   }, {
@@ -39912,7 +39911,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49487" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62092" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
