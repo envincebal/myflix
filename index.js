@@ -1,25 +1,25 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const bodyParser = require('body-parser')
+const bodyParser = require("body-parser")
 const mongoose = require("mongoose");
 const Models = require("./models.js");
 const cors = require("cors");
-const {check, validationResult} = require('express-validator');
-const passport = require('passport');
-require('./passport');
+const {check, validationResult} = require("express-validator");
+const passport = require("passport");
+require("./passport");
 const path = require("path");
 
 const Movies = Models.Movie;
 const Users = Models.User;
 
-// var allowedOrigins = ['http://localhost:3000', 'http://testsite.com'];
+// var allowedOrigins = ["http://localhost:3000", "http://testsite.com"];
 
 app.use(cors());
 
-var auth = require('./auth')(app);
+var auth = require("./auth")(app);
 
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser:
+// mongoose.connect("mongodb://localhost:27017/myFlixDB", {useNewUrlParser:
 // true});
 mongoose.connect("mongodb+srv://envincebal:.357magnum@myflixdb-luj5p.mongodb.net/myFlixDB?retryWri" +
     "tes=true&w=majority", {useNewUrlParser: true});
@@ -40,7 +40,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res
     .status(500)
-    .send('Something broke!');
+    .send("Something broke!");
 });
 
 app.get("/", (req, res) => {
@@ -48,7 +48,7 @@ app.get("/", (req, res) => {
 });
 
 //Return a list of ALL movies to the user
-app.get("/movies", passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get("/movies", passport.authenticate("jwt", {session: false}), (req, res) => {
   Movies
     .find()
     .then(movies => {
@@ -66,7 +66,7 @@ app.get("/movies", passport.authenticate('jwt', {session: false}), (req, res) =>
 
 // Return data (description, genre, director, image URL, whether it’s featured
 // or not) about a single movie by title to the user
-app.get("/movies/:Title", passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get("/movies/:Title", passport.authenticate("jwt", {session: false}), (req, res) => {
   Movies
     .find({Title: req.params.Title})
     .then(movie => {
@@ -83,7 +83,7 @@ app.get("/movies/:Title", passport.authenticate('jwt', {session: false}), (req, 
 });
 
 // Return data about a genre (description) by name/title
-app.get("/genre/:Name", passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get("/genre/:Name", passport.authenticate("jwt", {session: false}), (req, res) => {
   Movies
     .find({"Genre.Name": req.params.Name})
     .then(movie => {
@@ -100,7 +100,7 @@ app.get("/genre/:Name", passport.authenticate('jwt', {session: false}), (req, re
 });
 
 // Return data about a director (name, bio, birth year) by name
-app.get("/director/:Name", passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get("/director/:Name", passport.authenticate("jwt", {session: false}), (req, res) => {
   Movies
     .find({"Director.Name": req.params.Name})
     .then(movie => {
@@ -133,18 +133,18 @@ app.get("/users/:Username", (req, res) => {
     })
 })
 
-app.post('/users',
+app.post("/users",
 // Validation logic here for request you can either use a chain of methods like
 // .not().isEmpty() which means "opposite of isEmpty" in plain english "is not
 // empty" or use .isLength({min: 5}) which means minimum value of 5 characters
 // are only allowed
 [
-  check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required')
+  check("Username", "Username is required").isLength({min: 5}),
+  check("Username", "Username contains non alphanumeric characters - not allowed.").isAlphanumeric(),
+  check("Password", "Password is required")
     .not()
     .isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()
+  check("Email", "Email does not appear to be valid").isEmail()
 ], (req, res) => {
 
   // check the validation object for errors
@@ -197,7 +197,14 @@ app.post('/users',
 
 // Allow users to update their user info (username, password, email, date of
 // birth)
-app.put("/users/:Username", passport.authenticate('jwt', {session: false}), (req, res) => {
+app.put("/users/:Username",[
+  check("Username", "Username is required").isLength({min: 5}),
+  check("Username", "Username contains non alphanumeric characters - not allowed.").isAlphanumeric(),
+  check("Password", "Password is required")
+    .not()
+    .isEmpty(),
+  check("Email", "Email does not appear to be valid").isEmail()
+], passport.authenticate("jwt", {session: false}), (req, res) => {
 
   const errors = validationResult(req);
 
@@ -219,7 +226,10 @@ app.put("/users/:Username", passport.authenticate('jwt', {session: false}), (req
       Email: req.body.Email,
       BirthDate: req.body.BirthDate
     }
-  }, {new: true})
+  }, {upsert: true,
+    new: true,
+    runValidators: true,
+    setDefaultsOnInsert: true})
     .then(updatedUser => res.json(updatedUser))
     .catch(err => {
       console.error(err);
@@ -230,7 +240,7 @@ app.put("/users/:Username", passport.authenticate('jwt', {session: false}), (req
 });
 
 // Allow users to add a movie to their list of favorites
-app.post("/users/:Username/Movies/:MovieID", passport.authenticate('jwt', {session: false}), (req, res) => {
+app.post("/users/:Username/Movies/:MovieID", passport.authenticate("jwt", {session: false}), (req, res) => {
   Users.findOneAndUpdate({
     Username: req.params.Username
   }, {
@@ -248,7 +258,7 @@ app.post("/users/:Username/Movies/:MovieID", passport.authenticate('jwt', {sessi
 });
 
 // Allow users to remove a movie from their list of favorites
-app.delete("/users/:Username/Movies/:MovieID", passport.authenticate('jwt', {session: false}), (req, res) => {
+app.delete("/users/:Username/Movies/:MovieID", passport.authenticate("jwt", {session: false}), (req, res) => {
   Users.findOneAndUpdate({
     Username: req.params.Username
   }, {

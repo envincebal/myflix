@@ -6,12 +6,12 @@ import axios from 'axios';
 
 export const UpdateView = (props) => {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");  
   const [email, setEmail] = useState("");
   const [birthdate, setBirthDate] = useState("");
 
   const updateUserInfo = (e) => {
-    e.preventDefault();
+    e.preventDefault();  
 
     const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
 
@@ -36,7 +36,7 @@ export const UpdateView = (props) => {
 
   return(
     <Container className="registrationForm">
-      <Form>
+      <Form> 
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
