@@ -119,7 +119,7 @@ export class MainView extends Component {
 
     return (
       <div className="main-view">
-        <Router>
+        <Router basename="/client">
           <Navbar bg="dark" variant="dark">
             <Link to={"/"}>
               <Navbar.Brand className="main-title">MyFlix</Navbar.Brand>
