@@ -39331,7 +39331,7 @@ var RegistrationView = function RegistrationView(props) {
       BirthDate: birthdate
     }).then(function (response) {
       var data = response.data;
-      window.open("/", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
+      window.open("/clien", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
     }).catch(function (e) {
       console.log("error registering the user");
     });
