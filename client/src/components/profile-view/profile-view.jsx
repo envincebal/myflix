@@ -27,7 +27,7 @@ export class ProfileView extends Component {
 
   getUser = (token) => {
     let username = localStorage.getItem('user');
-    const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+    const userURL = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users/";
     axios.get(userURL + username, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -48,7 +48,7 @@ export class ProfileView extends Component {
   deleteProfile = (e) => {
     e.preventDefault();
     const user = localStorage.getItem("user");
-    const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + user;
+    const userURL = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users/" + user;
 
     axios.delete(userURL)
       .then(response => {
@@ -65,7 +65,7 @@ export class ProfileView extends Component {
   deleteMovie = (e, movieId) => {
     e.preventDefault();
     console.log(movieId);
-    const url = `https://shielded-anchorage-97078.herokuapp.com/users/`;
+    const url = `https://guarded-earth-07956.herokuapp.com/users/`;
     const user = localStorage.getItem("user");
     const deleteMovie = `${url}${user}/Movies/${movieId}`;
     axios.delete(deleteMovie, {

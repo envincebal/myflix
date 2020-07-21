@@ -49,7 +49,7 @@ export class MainView extends Component {
 
   getUser = (token) => {
     let username = localStorage.getItem("user");
-    const userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+    const userURL = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users/";
     axios.get(userURL + username, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -67,7 +67,7 @@ export class MainView extends Component {
   }
 
   getMovies(token) {
-    const endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
+    const endpoint = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/movies";
     axios
       .get(endpoint, {
       headers: {

@@ -14,7 +14,7 @@ export function LoginView (props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let loginUrl = "https://shielded-anchorage-97078.herokuapp.com/login";
+    let loginUrl = "https://guarded-earth-07956.herokuapp.com/login";
     console.log(username, password);
 
     axios.post(loginUrl, null, {

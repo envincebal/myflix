@@ -37735,7 +37735,7 @@ var MovieCard = function MovieCard(props) {
 
   var addFavorites = function addFavorites(e) {
     e.preventDefault();
-    var url = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+    var url = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users/";
     var user = localStorage.getItem("user");
     var addMovie = "".concat(url).concat(user, "/Movies/").concat(movie._id);
     var favArr = localStorage.getItem("favorites");
@@ -38883,7 +38883,7 @@ function LoginView(props) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    var loginUrl = "https://shielded-anchorage-97078.herokuapp.com/login";
+    var loginUrl = "https://guarded-earth-07956.herokuapp.com/login";
     console.log(username, password);
 
     _axios.default.post(loginUrl, null, {
@@ -39136,7 +39136,7 @@ function (_Component) {
 
     _this.getUser = function (token) {
       var username = localStorage.getItem('user');
-      var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+      var userURL = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users/";
 
       _axios.default.get(userURL + username, {
         headers: {
@@ -39157,7 +39157,7 @@ function (_Component) {
     _this.deleteProfile = function (e) {
       e.preventDefault();
       var user = localStorage.getItem("user");
-      var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/" + user;
+      var userURL = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users/" + user;
 
       _axios.default.delete(userURL).then(function (response) {
         var data = response.data;
@@ -39172,7 +39172,7 @@ function (_Component) {
     _this.deleteMovie = function (e, movieId) {
       e.preventDefault();
       console.log(movieId);
-      var url = "https://shielded-anchorage-97078.herokuapp.com/users/";
+      var url = "https://guarded-earth-07956.herokuapp.com/users/";
       var user = localStorage.getItem("user");
       var deleteMovie = "".concat(url).concat(user, "/Movies/").concat(movieId);
 
@@ -39322,7 +39322,7 @@ var RegistrationView = function RegistrationView(props) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    var loginUrl = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users";
+    var loginUrl = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users";
 
     _axios.default.post(loginUrl, {
       Username: username,
@@ -39443,7 +39443,7 @@ var UpdateView = function UpdateView(props) {
 
   var updateUserInfo = function updateUserInfo(e) {
     e.preventDefault();
-    var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+    var userURL = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users/";
 
     _axios.default.put(userURL + localStorage.getItem('user'), {
       Username: username,
@@ -39593,7 +39593,7 @@ function (_Component) {
 
     _this.getUser = function (token) {
       var username = localStorage.getItem("user");
-      var userURL = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/users/";
+      var userURL = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/users/";
 
       _axios.default.get(userURL + username, {
         headers: {
@@ -39645,7 +39645,7 @@ function (_Component) {
     value: function getMovies(token) {
       var _this2 = this;
 
-      var endpoint = "https://cors-anywhere.herokuapp.com/https://shielded-anchorage-97078.herokuapp.com/movies";
+      var endpoint = "https://cors-anywhere.herokuapp.com/https://guarded-earth-07956.herokuapp.com/movies";
 
       _axios.default.get(endpoint, {
         headers: {
@@ -39913,7 +39913,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53890" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54738" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
