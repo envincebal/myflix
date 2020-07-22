@@ -1,6 +1,7 @@
 
 .movie-view-card{
   padding: 20px;
+  max-width: 450px;
 
   .movie-view {
     text-align: center;
@@ -23,7 +24,7 @@
   }
 
   img{
-    width: 300px;
+    width: 100%;
 
   }
 }
