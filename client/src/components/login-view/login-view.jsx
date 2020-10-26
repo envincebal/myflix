@@ -11,6 +11,7 @@ import "./login-view.scss";
 export function LoginView (props) {
   const [ username, setUsername ] = useState("");
   const [ password, setPassword ] = useState("");
+  const [ error, setError ] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,14 +24,15 @@ export function LoginView (props) {
         Password: password
       }
     })
-      .then(response => {
-        const data = response.data;
+    .then(response => {
+      const data = response.data;
 
-        props.onLoggedIn(data);
-      })
-      .catch(e => {
-        console.log('no such user')
-      })
+      props.onLoggedIn(data);
+    })
+    .catch(e => {
+      console.log('no such user');
+      setError(e);
+    })
   }
 
   return (
@@ -51,6 +53,14 @@ export function LoginView (props) {
         <Form.Text className="text-muted">
           New user? Sign up for an account <Link to={"/register"}>HERE</Link>
         </Form.Text>
+        {
+          error && (
+            <Form.Text className="login-error">
+              Your username and/or password are incorrect. Please try again.
+            </Form.Text>
+          )
+        }
+
       </Form>
     </Container>
   )

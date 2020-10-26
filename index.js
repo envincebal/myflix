@@ -21,7 +21,10 @@ var auth = require("./auth")(app);
 
 // mongoose.connect("mongodb://localhost:27017/myFlixDB", {useNewUrlParser:
 // true});
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 app.use(bodyParser.json());
 
@@ -166,13 +169,13 @@ app.post("/users",
           .status(400)
           .send(req.body.Username + " already exists");
       } else {
-        Users.create({
-            Username: req.body.Username, 
-            Password: hashedPassword, 
-            Email: req.body.Email, 
-            BirthDate: req.body.BirthDate
-          })
-          .then(user => { 
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            BirthDate: req.body.BirthDate})
+          .then(user => {
             res
               .status(201)
               .json(user)

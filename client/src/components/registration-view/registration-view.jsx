@@ -27,8 +27,9 @@ export const RegistrationView = (props) => {
         const data = response.data;
         window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
       })
-      .catch((e) => {
-        console.log("error registering the user");
+      .catch((err) => {
+
+        console.log(err);
       });
   }
 
