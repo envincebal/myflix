@@ -14,7 +14,7 @@ export const RegistrationView = (props) => {
   const [birthdate, setBirthDate] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
 
     const loginUrl = "https://protected-chamber-62597.herokuapp.com/users";
     axios.post(loginUrl, {
