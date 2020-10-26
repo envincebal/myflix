@@ -23,7 +23,7 @@ import {UpdateView} from '../update-view/update-view';
 import "./main-view.scss";
 
 export class MainView extends Component {
-  
+
   constructor() {
     super();
 
