@@ -111,22 +111,22 @@ export class MainView extends Component {
     })
   }
 
-  render() { 
+  render() {
     const {movies, user, input} = this.state;
 
-    if (!movies) 
+    if (!movies)
       return <div className="main-view"/>;
 
     return (
       <div className="main-view">
-        <Router basename="c">
+        <Router basename="/client">
           <Navbar bg="dark" variant="dark">
             <Link to={"/"}>
               <Navbar.Brand className="main-title">MyFlix</Navbar.Brand>
             </Link>
             <Nav className="mr-auto">
             </Nav>
-            {user && (
+            {user && ( 
               <div>
                 <Link to={"/profile"}>
                   <Button variant="link">Profile</Button>

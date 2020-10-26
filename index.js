@@ -146,7 +146,6 @@ app.post("/users",
   check("Password", "Password is required")
     .not()
     .isEmpty(),
-  check("Password", "Password must be at least 8 characters long").isLength({min: 8}),
   check("Email", "Email does not appear to be valid").isEmail()
 ], (req, res) => {
 
