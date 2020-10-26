@@ -39555,7 +39555,7 @@ var MainView = /*#__PURE__*/function (_Component) {
       return _react.default.createElement("div", {
         className: "main-view"
       }, _react.default.createElement(_reactRouterDom.BrowserRouter, {
-        basename: "/client"
+        basename: "c"
       }, _react.default.createElement(_Navbar.default, {
         bg: "dark",
         variant: "dark"
@@ -39771,7 +39771,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59835" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62502" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

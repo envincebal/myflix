@@ -91,7 +91,7 @@ export class MainView extends Component {
     if(favorites === null){
       localStorage.setItem("favorites", []);
     }
-    
+
     localStorage.setItem("token", authData.token);
     localStorage.setItem("user", authData.user.Username);
 
@@ -119,7 +119,7 @@ export class MainView extends Component {
 
     return (
       <div className="main-view">
-        <Router basename="/client">
+        <Router basename="c">
           <Navbar bg="dark" variant="dark">
             <Link to={"/"}>
               <Navbar.Brand className="main-title">MyFlix</Navbar.Brand>
