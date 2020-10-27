@@ -37,7 +37,6 @@ export const RegistrationView = (props) => {
   return (
     <Container className="registrationForm">
       <Form>
-        {console.log(usernameError)}
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
