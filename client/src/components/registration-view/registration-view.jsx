@@ -37,6 +37,7 @@ export const RegistrationView = (props) => {
   return (
     <Container className="registrationForm">
       <Form>
+        {console.log(typeof birthdate)}
         <Form.Group controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
