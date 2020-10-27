@@ -38730,7 +38730,7 @@ function LoginView(props) {
       var data = response.data;
       props.onLoggedIn(data);
     }).catch(function (e) {
-      console.log('no such user');
+      console.log(e);
       setError(e);
     });
   };
@@ -39166,11 +39166,6 @@ var RegistrationView = function RegistrationView(props) {
       birthdate = _useState8[0],
       setBirthDate = _useState8[1];
 
-  var usernameError = false;
-  var passwordError = false;
-  var emailError = false;
-  var birthdateError = false;
-
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
     var loginUrl = "https://protected-chamber-62597.herokuapp.com/users";
@@ -39184,9 +39179,6 @@ var RegistrationView = function RegistrationView(props) {
       var data = response.data;
       window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
     }).catch(function (err) {
-      username.length < 5 ? usernameError = true : !usernameError;
-      password.length < 8 ? passwordError = true : !passwordError;
-      !email.includes("@") || !email.includes(".com") ? emailError = true : !emailError;
       console.log(err);
     });
   };
@@ -39202,9 +39194,7 @@ var RegistrationView = function RegistrationView(props) {
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
-  }), usernameError ? _react.default.createElement(_Form.default.Text, {
-    className: "password"
-  }, "Username must be at least 5 characters long.") : ""), _react.default.createElement(_Form.default.Group, {
+  })), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicPassword"
   }, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
     type: "password",
@@ -39213,9 +39203,7 @@ var RegistrationView = function RegistrationView(props) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  }), passwordError ? _react.default.createElement(_Form.default.Text, {
-    className: "password"
-  }, "Password must be at least 8 characters long.") : ""), _react.default.createElement(_Form.default.Group, {
+  })), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicEmail"
   }, _react.default.createElement(_Form.default.Label, null, "Email address"), _react.default.createElement(_Form.default.Control, {
     type: "email",
@@ -39224,9 +39212,7 @@ var RegistrationView = function RegistrationView(props) {
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     }
-  }), emailError ? _react.default.createElement(_Form.default.Text, {
-    className: "password"
-  }, "Must be a valid email.") : ""), _react.default.createElement(_Form.default.Group, {
+  })), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicDob"
   }, _react.default.createElement(_Form.default.Label, null, "Date of Birth"), _react.default.createElement(_Form.default.Control, {
     type: "date",
@@ -39783,7 +39769,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51340" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50870" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
