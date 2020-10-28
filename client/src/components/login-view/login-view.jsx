@@ -30,9 +30,9 @@ export function LoginView (props) {
 
       props.onLoggedIn(data);
     })
-    .catch(e => {
-      console.log(e);
-      setError(e);
+    .catch(err => {
+      console.log(err);
+      setError(err);
     })
   }
 

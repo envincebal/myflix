@@ -159,7 +159,6 @@ export class MainView extends Component {
                     {
                     movies.filter(movie => input === "" || movie.title.toLowerCase().includes(input))
                     .map(m => { 
-              
                     return (
                       <Col key={m._id} xs={12} sm={6} md={4}>
                         <MovieCard

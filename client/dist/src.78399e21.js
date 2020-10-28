@@ -38730,9 +38730,9 @@ function LoginView(props) {
     }).then(function (response) {
       var data = response.data;
       props.onLoggedIn(data);
-    }).catch(function (e) {
-      console.log(e);
-      setError(e);
+    }).catch(function (err) {
+      console.log(err);
+      setError(err);
     });
   };
 
@@ -39014,7 +39014,6 @@ var ProfileView = /*#__PURE__*/function (_Component) {
 
     _this.deleteMovie = function (e, movieId) {
       e.preventDefault();
-      console.log(movieId);
       var url = "https://protected-chamber-62597.herokuapp.com/users/";
       var user = localStorage.getItem("user");
       var deleteMovie = "".concat(url).concat(user, "/Movies/").concat(movieId);
@@ -39024,8 +39023,6 @@ var ProfileView = /*#__PURE__*/function (_Component) {
           Authorization: "Bearer ".concat(localStorage.getItem('token'))
         }
       }).then(function (response) {
-        console.log(response);
-
         _this.getUser(localStorage.getItem("token"));
       }).catch(function (event) {
         console.log(event);
@@ -39169,6 +39166,11 @@ var RegistrationView = function RegistrationView(props) {
       birthdate = _useState8[0],
       setBirthDate = _useState8[1];
 
+  var _useState9 = (0, _react.useState)(""),
+      _useState10 = _slicedToArray(_useState9, 2),
+      error = _useState10[0],
+      setError = _useState10[1];
+
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
     var loginUrl = "https://protected-chamber-62597.herokuapp.com/users";
@@ -39182,6 +39184,7 @@ var RegistrationView = function RegistrationView(props) {
       var data = response.data;
       window.open("/client", "_self"); // the second argument '_self' is necessary so that the page will open in the current tab
     }).catch(function (err) {
+      setError(err);
       console.log(err);
     });
   };
@@ -39197,7 +39200,9 @@ var RegistrationView = function RegistrationView(props) {
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
-  })), _react.default.createElement(_Form.default.Group, {
+  }), _react.default.createElement(_Form.default.Text, {
+    className: "text-muted"
+  }, "Username must be at least 5 characters long.")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicPassword"
   }, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
     type: "password",
@@ -39206,7 +39211,9 @@ var RegistrationView = function RegistrationView(props) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  })), _react.default.createElement(_Form.default.Group, {
+  }), _react.default.createElement(_Form.default.Text, {
+    className: "text-muted"
+  }, "Password must be at least 8 characters long.")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicEmail"
   }, _react.default.createElement(_Form.default.Label, null, "Email address"), _react.default.createElement(_Form.default.Control, {
     type: "email",
@@ -39215,7 +39222,9 @@ var RegistrationView = function RegistrationView(props) {
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     }
-  })), _react.default.createElement(_Form.default.Group, {
+  }), _react.default.createElement(_Form.default.Text, {
+    className: "text-muted"
+  }, "Enter a valid email address.")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicDob"
   }, _react.default.createElement(_Form.default.Label, null, "Date of Birth"), _react.default.createElement(_Form.default.Control, {
     type: "date",
@@ -39223,7 +39232,9 @@ var RegistrationView = function RegistrationView(props) {
     onChange: function onChange(e) {
       return setBirthDate(e.target.value);
     }
-  })), _react.default.createElement(_Button.default, {
+  })), error && _react.default.createElement(_Form.default.Text, {
+    className: "login-error"
+  }, "An error occurred. One or more entries are invalid. Please try again."), _react.default.createElement(_Button.default, {
     variant: "primary",
     type: "submit",
     onClick: handleSubmit
@@ -39772,7 +39783,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54538" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51888" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

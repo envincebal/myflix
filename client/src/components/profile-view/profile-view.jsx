@@ -64,15 +64,16 @@ export class ProfileView extends Component {
 
   deleteMovie = (e, movieId) => {
     e.preventDefault();
-    console.log(movieId);
+
     const url = `https://protected-chamber-62597.herokuapp.com/users/`;
     const user = localStorage.getItem("user");
     const deleteMovie = `${url}${user}/Movies/${movieId}`;
+
     axios.delete(deleteMovie, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(response => {
-        console.log(response);
+
         this.getUser(localStorage.getItem("token"));
       })
       .catch(event => {
@@ -87,10 +88,9 @@ export class ProfileView extends Component {
 
   render(){
     const {favoriteMovies, username, email, birthdate} = this.state;
-
     let movies = JSON.parse(localStorage.getItem("movies"));
-
     let filteredFavorites = [];
+
     movies.map(m => {
       favoriteMovies.forEach(favorite => {
         if (m._id === favorite) {
@@ -98,7 +98,7 @@ export class ProfileView extends Component {
         }
       })
     });
-    
+
     return (
       <div className="profile-view">
         <Card className="profile-card">

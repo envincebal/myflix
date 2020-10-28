@@ -1,4 +1,10 @@
 .registrationForm{
   max-width: 500px;
   margin: 0px auto;
+
+  .login-error{
+    color: #f83636;
+    font-size: 14px;
+    margin: 0 0 20px 0;
+  }
 }
