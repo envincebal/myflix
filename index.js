@@ -125,7 +125,8 @@ app.post("/users",
     .not()
     .isEmpty(),
   check("Password", "Password must be at least 8 characters long").isLength({min: 8}),
-  check("Email", "Email does not appear to be valid").isEmail()
+  check("Email", "Email does not appear to be valid").isEmail(),
+  check("BirthDate", "BirthDate does not appear to be valid").isISO8601().toDate()
 ], (req, res) => {
 
   // check the validation object for errors

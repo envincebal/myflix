@@ -53,7 +53,7 @@ export class ProfileView extends Component {
     axios.delete(userURL)
       .then(response => {
         const data = response.data;
-        window.open("/", "_self");
+        window.open("/client", "_self");
         console.log(data);
         localStorage.clear();
       })

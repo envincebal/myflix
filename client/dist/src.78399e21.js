@@ -39004,7 +39004,7 @@ var ProfileView = /*#__PURE__*/function (_Component) {
 
       _axios.default.delete(userURL).then(function (response) {
         var data = response.data;
-        window.open("/", "_self");
+        window.open("/client", "_self");
         console.log(data);
         localStorage.clear();
       }).catch(function (e) {
