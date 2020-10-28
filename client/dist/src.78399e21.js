@@ -38717,7 +38717,8 @@ function LoginView(props) {
       setError = _useState6[1];
 
   var handleSubmit = function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); // http://localhost:1234/client/
+
     var loginUrl = "https://protected-chamber-62597.herokuapp.com/login";
     console.log(username, password);
 
@@ -39771,7 +39772,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61227" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54538" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

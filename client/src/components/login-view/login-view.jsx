@@ -15,6 +15,7 @@ export function LoginView (props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // http://localhost:1234/client/
     let loginUrl = "https://protected-chamber-62597.herokuapp.com/login";
     console.log(username, password);
 

@@ -19,13 +19,13 @@ app.use(cors());
 
 var auth = require("./auth")(app);
 
-mongoose.connect("mongodb://localhost:27017/myFlixDB", {useNewUrlParser:
-true,
-useUnifiedTopology: true});
-// mongoose.connect(process.env.CONNECTION_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
+// mongoose.connect("mongodb://localhost:27017/myFlixDB", {useNewUrlParser:
+// true,
+// useUnifiedTopology: true});
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 app.use(bodyParser.json());
 
@@ -125,8 +125,7 @@ app.post("/users",
     .not()
     .isEmpty(),
   check("Password", "Password must be at least 8 characters long").isLength({min: 8}),
-  check("Email", "Email does not appear to be valid").isEmail(),
-  check("BirthDate", "Birth date does not appear to be valid").isDate()
+  check("Email", "Email does not appear to be valid").isEmail()
 ], (req, res) => {
 
   // check the validation object for errors
