@@ -39303,6 +39303,11 @@ var UpdateView = function UpdateView(props) {
       birthdate = _useState8[0],
       setBirthDate = _useState8[1];
 
+  var _useState9 = (0, _react.useState)(""),
+      _useState10 = _slicedToArray(_useState9, 2),
+      error = _useState10[0],
+      setError = _useState10[1];
+
   var updateUserInfo = function updateUserInfo(e) {
     e.preventDefault();
     var userURL = "https://protected-chamber-62597.herokuapp.com/users/";
@@ -39319,9 +39324,11 @@ var UpdateView = function UpdateView(props) {
     }).then(function (response) {
       var data = response.data;
       localStorage.setItem("user", username);
+      localStorage.clear();
+      window.open("/client", "_self");
       console.log(data);
-    }).catch(function (e) {
-      console.log("error registering the user");
+    }).catch(function (err) {
+      setError(err);
     });
   };
 
@@ -39336,7 +39343,9 @@ var UpdateView = function UpdateView(props) {
     onChange: function onChange(e) {
       return setUsername(e.target.value);
     }
-  })), _react.default.createElement(_Form.default.Group, {
+  }), _react.default.createElement(_Form.default.Text, {
+    className: "text-muted"
+  }, "Username must be at least 5 characters long.")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicPassword"
   }, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
     type: "password",
@@ -39345,7 +39354,9 @@ var UpdateView = function UpdateView(props) {
     onChange: function onChange(e) {
       return setPassword(e.target.value);
     }
-  })), _react.default.createElement(_Form.default.Group, {
+  }), _react.default.createElement(_Form.default.Text, {
+    className: "text-muted"
+  }, "Password must be at least 8 characters long.")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicEmail"
   }, _react.default.createElement(_Form.default.Label, null, "Email address"), _react.default.createElement(_Form.default.Control, {
     type: "email",
@@ -39354,7 +39365,9 @@ var UpdateView = function UpdateView(props) {
     onChange: function onChange(e) {
       return setEmail(e.target.value);
     }
-  })), _react.default.createElement(_Form.default.Group, {
+  }), _react.default.createElement(_Form.default.Text, {
+    className: "text-muted"
+  }, "Enter a valid email address.")), _react.default.createElement(_Form.default.Group, {
     controlId: "formBasicDob"
   }, _react.default.createElement(_Form.default.Label, null, "Date of Birth"), _react.default.createElement(_Form.default.Control, {
     type: "date",
@@ -39362,7 +39375,9 @@ var UpdateView = function UpdateView(props) {
     onChange: function onChange(e) {
       return setBirthDate(e.target.value);
     }
-  })), _react.default.createElement(_Button.default, {
+  })), error && _react.default.createElement(_Form.default.Text, {
+    className: "login-error"
+  }, "An error occurred. One or more entries are invalid. Please try again."), _react.default.createElement(_Button.default, {
     onClick: updateUserInfo
   }, "Update Info")));
 };

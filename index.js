@@ -170,7 +170,7 @@ app.post("/users",
 
 // Allow users to update their user info (username, password, email, date of
 // birth)
-app.put("/users/:Username", 
+app.put("/users/:Username",
 [
   check("Username", "Username is required").isLength({min: 5}),
   check("Username", "Username contains non alphanumeric characters - not allowed.").isAlphanumeric(),

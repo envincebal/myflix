@@ -118,14 +118,14 @@ export class ProfileView extends Component {
                   <span className="delete-movie" onClick={(e) => this.deleteMovie(e, favorite._id)}> Delete</span>
                   </li>
                 )
-                }) 
+                })
               }
           </ul>
           <div className="buttons-container">
             <Link to={"/"}>
               <Button className="back-button">Back</Button>
             </Link>
-            <Button 
+            <Button
               className="delete-button"
               onClick={this.deleteProfile}>
                 Delete Profile
